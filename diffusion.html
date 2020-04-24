@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Diffusion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css"
+  </head>
+  <div class="topnav">
+    <a href="index.html" class="active">Home</a>
+  </div>
+  <body align="center">
+    <div>
+      <script>
+        var n = 300;
+        var r = 3;
+        var x = new Array(n);
+        var y = new Array(n);
+        var dx = new Array(n);
+        var dy = new Array(n);
+        var colored = new Array(n);
+        var width = 1200;
+        var height = 700;
+        var intervalId;
+
+        function startSimulation() {
+          document.getElementById("start").disabled = true;
+          document.getElementById("cont").disabled = true;
+          document.getElementById("stop").disabled = false;
+          for (i = 1; i <= n; i++) {
+            x[i] = width * Math.random();
+            y[i] = height * Math.random();
+            console.log(x[i]);
+            console.log(y[i]);
+            dx[i] = 5 * Math.random() - 2.5;
+            dy[i] = 5 * Math.random() - 2.5;
+            if (x[i] < width/4 && y[i] < height/4) {
+              colored[i] = true;
+            } else {
+              colored[i] = false;
+            }
+          }
+
+          context = simulation.getContext('2d');
+          intervalId = setInterval(drawParticles, 10);
+        }
+
+        function drawParticles() {
+          context.clearRect(0, 0, width, height);
+          for (i = 1; i <= n; i++) {
+            context.beginPath();
+            if (colored[i]) {
+              context.fillStyle="#FF0000";
+            } else {
+              context.fillStyle="#000000";
+            }
+            // Draws a circles of radius 5 at the coordinates on the canvas
+            context.arc(x[i], y[i], r, 0, 2*Math.PI, true);
+            context.closePath();
+            context.fill();
+            dx[i] = (x[i] < 0 || x[i] > width) ? -dx[i] : dx[i];
+            dy[i] = (y[i] < 0 || y[i] > height) ? -dy[i] : dy[i];
+            x[i] += dx[i];
+            y[i] += dy[i];
+          }
+          checkCollisions();
+        }
+
+
+        function checkCollisions() {
+          for (i = 1; i < n; i++) {
+            for (j = i + 1; j <= n; j++) {
+              if (distance(i, j) < 2*r) {
+                /* exchange velocities */
+                [dx[i], dx[j]] = [dx[j], dx[i]];
+                [dy[i], dy[j]] = [dy[j], dy[i]];
+              }
+            }
+          }
+        }
+
+        function distance(i, j) {
+          return Math.sqrt(Math.pow(x[i] - x[j], 2) + Math.pow(y[i] - y[j], 2));
+        }
+
+        function continueSimulation() {
+          intervalId = setInterval(drawParticles, 10);
+          document.getElementById("start").disabled = true;
+          document.getElementById("cont").disabled = true;
+          document.getElementById("stop").disabled = false;
+        }
+        function stopSimulation() {
+          clearInterval(intervalId);
+          document.getElementById("start").disabled = false;
+          document.getElementById("cont").disabled = false;
+          document.getElementById("stop").disabled = true;
+        }
+      </script>
+      <canvas id="simulation" width="1200" height="700"></canvas><br />
+      <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
+      <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
+      <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button><br />
+      <p>Check out how the colored particles spread out!</p>
+    </div>
+  </body>
+</html>
