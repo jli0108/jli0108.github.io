@@ -1,15 +1,20 @@
-body {
-  font-family: "Computer Modern Serif", sans-serif;
-  font-size: 18px;
-  background-color: slategray;
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+    font-family: "Computer Modern Serif", sans-serif;
+    font-size: 18px;
+    background-color: slategray;
 }
 div {
   background-color: lightsteelblue;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  margin-right: 150px;
-  margin-left: 150px;
-  padding: 15px 50px 15px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-right: 10%;
+  margin-left: 10%;
+  padding: 1% 5% 1%;
 }
 .topnav {
   background-color: #333;
