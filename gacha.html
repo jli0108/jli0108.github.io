@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Gacha</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css"
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
+    <meta charset="utf-8">
     <title>Gacha</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css"
   </head>
   <body align="center">
     <div class="topnav">
       <a href="index.html" class="active">Home</a>
+      <a href="index.html#resume" class="active">Resume</a>
+      <a href="#" onclick="return false;">This button does nothing but I intend to add more items to the menu eventually</a>
     </div>
     <div>
       <script>
@@ -24,14 +24,15 @@
 
         var count = 0;
         var cards = [
-          new Card("1000 dollars from Donald Trump", 0.20),
-          new Card("a diploma from UMD, one of the most prestigious schools", 0.15),
+          new Card("1000 dollars from Donald Trump", 0.10),
+          new Card("a diploma from UMD, one of the most prestigious schools out there", 0.15),
           new Card("a free meal from Quickway", 0.2),
           new Card("coronavirus", 0.01),
           new Card("a C on your last midterm", 0.14),
           new Card("fired from your job", 0.05),
           new Card("another math problem you have no idea how to do", 0.15),
-          new Card("another programming assignment you have no motivation for", 0.1)
+          new Card("another programming assignment you have no motivation for", 0.1),
+          new Card("rejected from another internship", 0.10)
         ];
 
         var rolls = [];
