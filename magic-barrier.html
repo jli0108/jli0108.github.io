@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <title>Magic Barrier</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css"
+  </head>
+  <body align="center">
+    <div class="topnav">
+      <a href="index.html" class="active">Home</a>
+      <a href="resume.pdf" class="active">Resume</a>
+      <a href="summer2020.html" class="active">Summer 2020</a>
+      <a href="#" onclick="return false;">This button does nothing but I intend to add more items to the menu eventually</a>
+    </div>
+    <div>
+      <script>
+      var n = 100;
+      var r = 3;
+      var x = new Array(n);
+      var y = new Array(n);
+      var dx = new Array(n);
+      var dy = new Array(n);
+      var colored = new Array(n);
+      var width = 1200;
+      var height = 700;
+      var intervalId;
+      var time;
+      var canvas, context, graphCanvas, graphContext;
+      function startSimulation() {
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+        for (i = 1; i <= n; i++) {
+          x[i] = width * Math.random();
+          y[i] = height * Math.random();
+          dx[i] = 5 * Math.random() - 2.5;
+          dy[i] = 5 * Math.random() - 2.5;
+          colored[i] = false;
+        }
+
+        for (i = 1; i <= 1; i++) {
+          colored[i] = true;
+        }
+        canvas = document.getElementById("simulation");
+        context = canvas.getContext("2d");
+        context.fillStyle = "white";
+        context.fill;
+        graphCanvas = document.getElementById("graph");
+        graphContext = graphCanvas.getContext("2d");
+        graphContext.clearRect(0, 0, 1000, 500);
+        // Including axis titles
+        graphContext.font = "20px Arial";
+        graphContext.textBaseline = "bottom";
+        graphContext.fillText("Time", 500, 400);
+        graphContext.textBaseline = "middle";
+        graphContext.fillText("Number of Particles", 10, 250);
+        time = 200;
+        intervalId = setInterval(drawParticles, 10);
+      }
+
+      function drawParticles() {
+        context.clearRect(0, 0, width, height);
+        for (i = 1; i <= n; i++) {
+          context.beginPath();
+          if (colored[i]) {
+            context.fillStyle="#0000CD";
+          } else {
+            context.fillStyle="#000000";
+          }
+          // Draws circles of radius 5 at the coordinates on the canvas
+          context.arc(x[i], y[i], r, 0, 2*Math.PI, true);
+          context.closePath();
+          context.fill();
+          dx[i] = (x[i] < 0 || x[i] > width || (Math.pow(x[i]-width/2,2) < 2.25
+            && Math.abs(dx[i]*dx[i] + dy[i]*dy[i]) < 4))
+            ? -dx[i] : dx[i];
+          dy[i] = (y[i] < 0 || y[i] > height) ? -dy[i] : dy[i];
+          x[i] += dx[i];
+          y[i] += dy[i];
+        }
+        checkCollisions();
+        plot();
+      }
+
+      function checkCollisions() {
+        for (i = 1; i < n; i++) {
+          for (j = i + 1; j <= n; j++) {
+            if (distance(i, j) < 2*r) {
+              /* exchange velocities */
+              [dx[i], dx[j]] = [dx[j], dx[i]];
+              [dy[i], dy[j]] = [dy[j], dy[i]];
+              if (colored[i] || colored[j]) {
+                colored[i] = true;
+                colored[j] = true;
+              }
+            }
+          }
+        }
+      }
+
+      function distance(i, j) {
+        return Math.sqrt(Math.pow(x[i] - x[j], 2) + Math.pow(y[i] - y[j], 2));
+      }
+
+      function numColored() {
+        var sum = 0;
+        for (i = 1; i <= n; i++) {
+          if (colored[i]) {
+            sum++;
+          }
+        }
+        return sum;
+      }
+
+      function plot() {
+        time += 0.5;
+        if (time <= 1000) {
+          graphContext.beginPath();
+          graphContext.fillStyle="#000000";
+          graphContext.arc(time, 350 - numColored(), 1, 0, 2*Math.PI, true);
+          graphContext.closePath();
+          graphContext.fill();
+        }
+      }
+
+      function continueSimulation() {
+        intervalId = setInterval(drawParticles, 10);
+        document.getElemetnById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+      }
+
+      function stopSimulation() {
+        clearInterval(intervalId);
+        document.getElementById("start").disabled = false;
+        document.getElementById("cont").disabled = false;
+        document.getElementById("stop").disabled = true;
+      }
+      </script>
+      <canvas id="simulation" width="1200" height="700"></canvas><br />
+      <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
+      <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
+      <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button><br />
+      <p>Slow particles can't pass the magic barrier in the middle.</p>
+      <p>I don't know why but I made the colored particles cause other particles to become colored on collision.</p>
+      <p>We also assume no other intermolecular interactions.</p>
+    </div>
+    <div>
+      <h1>Number of Colored Particles Tracker</h1>
+      <canvas id="graph" width="1000" height="400">Time</canvas>
+    </div>
+  </body>
+</html>
