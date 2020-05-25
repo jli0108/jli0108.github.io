@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <title>Gacha</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css"
+  </head>
+  <body align="center">
+    <div class="topnav">
+      <a href="index.html" class="active">Home</a>
+      <a href="resume.pdf" class="active">Resume</a>
+      <a href="summer2020.html" class="active">Summer 2020</a>
+      <a href="#" onclick="return false;">This button does nothing but I intend to add more items to the menu eventually</a>
+    </div>
+    <script>
+      class Card {
+        constructor(name, chance) {
+          this.name = name;
+          this.chance = chance;
+        }
+      }
+
+      var count = 0;
+      var cards = [
+        new Card("McDonalds", 0.10),
+        new Card("Potbelly", 0.10),
+        new Card("Chick-fil-A", 0.15),
+        new Card("Chipotle", 0.10),
+        new Card("Panda Express", 0.10),
+        new Card("Quickway", 0.05),
+        new Card("Subway", 0.05),
+        new Card("Papa John's", 0.05),
+        new Card("Panera Bread", 0.05),
+        new Card("the refrigerator", 0.10),
+        new Card("Five Guys", 0.04),
+        new Card("Popeye's", 0.02),
+        new Card("Jumbo Jumbo", 0.05),
+        new Card("Pho and Grill", 0.04)
+      ];
+
+      var rolls = [];
+
+      function roll() {
+        count++;
+        var rng = Math.random();
+        console.log(rng);
+        var rollValue;
+        var i = 0;
+        while (rng >= cdf(i)) {
+          i++;
+        }
+        rollValue = cards[i].name;
+        rolls.push(cards[i]);
+        document.getElementById("output").innerHTML = "Go to " + rollValue + "!";
+        updateRolls(cards[i]);
+        document.getElementById("count").innerHTML = "Number of rolls: " + count;
+      }
+
+      function cdf(x) {
+        var sum = 0;
+        var i;
+        for (i = 0; i <= x; i++) {
+          sum += cards[i].chance;
+        }
+        return sum;
+      }
+
+      function updateRolls(card) {
+        var ul = document.getElementById("rolls");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(card.name));
+        ul.appendChild(li);
+      }
+    </script>
+    <div>
+      <button onclick="roll();">Click here to roll</button>
+      <p id="output">Let's see what you got!</p>
+      <p id="count">Number of rolls: 0</p>
+      <p><b>Your rolls:</b></p>
+      <ul id="rolls"></ul>
+    </div>
+  </body>
+</html>
