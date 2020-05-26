@@ -28,43 +28,50 @@
         var n = 500;
         var r = 5;
         var particles = new Array(n);
-        var width = 1200;
-        var height = 700;
         var intervalId;
 
         function startSimulation() {
           document.getElementById("start").disabled = true;
           document.getElementById("cont").disabled = true;
           document.getElementById("stop").disabled = false;
+          canvas = document.getElementById("simulation");
+          context = canvas.getContext("2d");
+
           for (i = 1; i <= n / 2; i++) {
-            particles[i] = new Particle(width * Math.random() / 2, height * Math.random(), 10 * Math.random() - 5, 10 * Math.random() - 5, true);
+            particles[i] = new Particle(canvas.width * Math.random() / 2, canvas.height * Math.random(), 10 * Math.random() - 5, 10 * Math.random() - 5, true);
           }
           for (i = (n / 2) + 1; i <= n; i++) {
-            particles[i] = new Particle(width * Math.random() / 2 + width / 2, height * Math.random(), 2 * Math.random() - 1, 2 * Math.random() - 1, false);
+            particles[i] = new Particle(canvas.width * Math.random() / 2 + canvas.width / 2, canvas.height * Math.random(), 2 * Math.random() - 1, 2 * Math.random() - 1, false);
           }
-          context = simulation.getContext('2d');
-          intervalId = setInterval(drawParticles, 10);
+          draw();
+        }
+
+        function draw() {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          drawParticles();
+          checkCollisions();
+          intervalId = requestAnimationFrame(draw);
         }
 
         function drawParticles() {
-          context.clearRect(0, 0, width, height);
           for (i = 1; i <= n; i++) {
             context.beginPath();
+            // Draws a particles of specified radius
+            context.arc(particles[i].x, particles[i].y, r, 0, 2*Math.PI, true);
             if (particles[i].colored) {
               context.fillStyle="#FF0000";
             } else {
               context.fillStyle="#191970";
             }
-            // Draws a circles of radius 5 at the coordinates on the canvas
-            context.arc(particles[i].x, particles[i].y, r, 0, 2*Math.PI, true);
-            context.closePath();
             context.fill();
-            particles[i].dx = (particles[i].x < 0 || particles[i].x > width) ? -particles[i].dx : particles[i].dx;
-            particles[i].dy = (particles[i].y < 0 || particles[i].y > height) ? -particles[i].dy : particles[i].dy;
+            context.closePath();
+
+            particles[i].dx = (particles[i].x + particles[i].dx < r || particles[i].x > canvas.width - r) ? -particles[i].dx : particles[i].dx;
+            particles[i].dy = (particles[i].y + particles[i].dy < r || particles[i].y > canvas.height - r) ? -particles[i].dy : particles[i].dy;
             particles[i].x += particles[i].dx;
             particles[i].y += particles[i].dy;
           }
-          checkCollisions();
+
         }
 
 
@@ -83,15 +90,16 @@
         function distance(i, j) {
           return Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
         }
+
         function continueSimulation() {
-          intervalId = setInterval(drawParticles, 10);
+          draw();
           document.getElementById("start").disabled = true;
           document.getElementById("cont").disabled = true;
           document.getElementById("stop").disabled = false;
         }
 
         function stopSimulation() {
-          clearInterval(intervalId);
+          cancelAnimationFrame(intervalId);
           document.getElementById("start").disabled = false;
           document.getElementById("cont").disabled = false;
           document.getElementById("stop").disabled = true;
