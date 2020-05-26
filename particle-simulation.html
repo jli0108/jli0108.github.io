@@ -68,7 +68,7 @@
           particles[i].colored = true;
         }
 
-        intervalId = setInterval(draw, 10);
+        draw();
       }
 
       function drawParticles() {
@@ -95,6 +95,7 @@
         drawParticles();
         checkCollisions();
         plot();
+        intervalId = requestAnimationFrame(draw);
       }
 
       function checkCollisions() {
@@ -139,14 +140,14 @@
       }
 
       function continueSimulation() {
-        intervalId = setInterval(draw, 10);
+        draw();
         document.getElementById("start").disabled = true;
         document.getElementById("cont").disabled = true;
         document.getElementById("stop").disabled = false;
       }
 
       function stopSimulation() {
-        clearInterval(intervalId);
+        cancelAnimationFrame(intervalId);
         document.getElementById("start").disabled = false;
         document.getElementById("cont").disabled = false;
         document.getElementById("stop").disabled = true;
