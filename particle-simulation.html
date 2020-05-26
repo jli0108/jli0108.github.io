@@ -71,6 +71,14 @@
         draw();
       }
 
+      function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawParticles();
+        checkCollisions();
+        plot();
+        intervalId = requestAnimationFrame(draw);
+      }
+      
       function drawParticles() {
         for (i = 1; i <= n; i++) {
           context.beginPath();
@@ -90,13 +98,7 @@
         }
       }
 
-      function draw() {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        drawParticles();
-        checkCollisions();
-        plot();
-        intervalId = requestAnimationFrame(draw);
-      }
+
 
       function checkCollisions() {
         for (i = 1; i < n; i++) {
