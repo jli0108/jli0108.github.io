@@ -39,8 +39,6 @@
 
         canvas = document.getElementById("simulation");
         context = canvas.getContext("2d");
-        context.fillStyle = "white";
-        context.fill;
 
         graphCanvas = document.getElementById("graph");
         graphContext = graphCanvas.getContext("2d");
@@ -78,7 +76,7 @@
         plot();
         intervalId = requestAnimationFrame(draw);
       }
-      
+
       function drawParticles() {
         for (i = 1; i <= n; i++) {
           context.beginPath();
