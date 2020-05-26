@@ -44,13 +44,21 @@
 
         graphCanvas = document.getElementById("graph");
         graphContext = graphCanvas.getContext("2d");
-        graphContext.clearRect(0, 0, 1000, 500);
+
+        // Drawing axis lines
+        graphContext.beginPath();
+        graphContext.moveTo(200, 0);
+        graphContext.lineTo(200, 350);
+        graphContext.lineTo(1000, 350);
+        graphContext.stroke();
+        graphContext.closePath();
+
         // Including axis titles
         graphContext.font = "20px Arial";
         graphContext.textBaseline = "bottom";
-        graphContext.fillText("Time", 500, 400);
+        graphContext.fillText("Time", 600, 380);
         graphContext.textBaseline = "middle";
-        graphContext.fillText("Number of Particles", 10, 250);
+        graphContext.fillText("Number of Particles", 10, graphCanvas.height / 2);
         time = 200;
 
         for (i = 1; i <= n; i++) {
@@ -66,7 +74,7 @@
       function drawParticles() {
         for (i = 1; i <= n; i++) {
           context.beginPath();
-          // Draws circles with specified radiusat the coordinates on the canvas
+          // Draws circles with specified radius at the coordinates on the canvas
           context.arc(particles[i].x, particles[i].y, r, 0, 2*Math.PI, true);
           if (particles[i].colored) {
             context.fillStyle="#0000CD"; // blue
@@ -120,13 +128,13 @@
       }
 
       function plot() {
-        time += 0.5;
-        if (time <= 1000) {
+        if (time <= graphCanvas.width) {
+          time += 0.5;
           graphContext.beginPath();
-          graphContext.fillStyle="#000000";
           graphContext.arc(time, 350 - numColored(), 1, 0, 2*Math.PI, true);
-          graphContext.closePath();
+          graphContext.fillStyle="#000000";
           graphContext.fill();
+          graphContext.closePath();
         }
       }
 
@@ -143,6 +151,7 @@
         document.getElementById("cont").disabled = false;
         document.getElementById("stop").disabled = true;
       }
+
       </script>
       <canvas id="simulation" width="1200" height="700"></canvas><br />
       <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
