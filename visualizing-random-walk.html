@@ -15,16 +15,16 @@
     </div>
     <div>
       <p>
-        One of those gambler setups. You worked all summer at McDonald's to earn $5. You decide to gamble it all away by playing the hottest new game, chess.<br>
-        Since your chess skills are only average, you either win or lose $1 each game, with equal probability. You stop when you go broke or you make bank with $9.
+        <b>One of those gambler setups.</b> You worked all summer at McDonald's to earn $5. You decide to gamble it all away by playing the hottest new game, chess.<br>
+        Since your chess skills are only average, you either win or lose $1 each game, with equal probability. You stop when you go broke or you make bank with $10.
       </p>
-      <canvas id="myCanvas" width=1000, height=300></canvas>
+      <canvas id="randomWalk" width=1000, height=300></canvas>
       <script>
 
-        var canvas = document.getElementById("myCanvas");
+        var canvas = document.getElementById("randomWalk");
         var ctx = canvas.getContext("2d");
 
-        var n = 10, m = 5;
+        var n = 11, m = 5;
         var radius = 20;
         var states = new Array(n);
 
@@ -32,7 +32,6 @@
         var activeStateColor = "red";
         var inactiveStateColor = "#0095DD";
         var intervalId;
-
         for (i = 0; i < n; i++) {
           states[i] = { x: (canvas.width - 2 * padding) * i / (n-1) + padding, y: canvas.height / 2, active: false};
         }
@@ -57,23 +56,25 @@
             ctx.moveTo(states[i].x + radius, states[i].y);
             ctx.lineTo(states[i + 1].x - radius, states[i].y);
             ctx.stroke();
-            // drawing left arrow heads
-            ctx.moveTo(states[i].x + radius + 5, states[i].y - 5);
-            ctx.lineTo(states[i].x + radius, states[i].y);
-            ctx.lineTo(states[i].x + radius + 5, states[i].y + 5);
-            ctx.stroke();
-            // drawing right arrow heads
-            ctx.moveTo(states[i+1].x - radius - 5, states[i+1].y - 5);
-            ctx.lineTo(states[i+1].x - radius, states[i].y);
-            ctx.lineTo(states[i+1].x - radius - 5, states[i+1].y + 5);
-            ctx.stroke();
-            ctx.closePath();
+            if (i < n - 2) {
+              // drawing left arrow heads
+              ctx.moveTo(states[i].x + radius + 5, states[i].y - 5);
+              ctx.lineTo(states[i].x + radius, states[i].y);
+              ctx.lineTo(states[i].x + radius + 5, states[i].y + 5);
+              ctx.stroke();
+            }
+            if (i > 0) {
+              // drawing right arrow heads
+              ctx.moveTo(states[i+1].x - radius - 5, states[i+1].y - 5);
+              ctx.lineTo(states[i+1].x - radius, states[i].y);
+              ctx.lineTo(states[i+1].x - radius - 5, states[i+1].y + 5);
+              ctx.stroke();
+              ctx.closePath();
+            }
           }
         }
 
         function draw() {
-          console.log(m);
-          drawArrows();
           states[m].active = true;
 
           drawStates();
@@ -85,10 +86,22 @@
             } else {
               m--;
             }
+          } else {
+            if (m == 0) {
+              ctx.font = "16px Arial";
+              ctx.fillStyle = "black";
+              ctx.fillText("You are now broke.", canvas.width / 2, canvas.height - 20);
+            } else if (m == n - 1) {
+              ctx.font = "16px Arial";
+              ctx.fillStyle = "black";
+              ctx.fillText("You doubled your money!", canvas.width / 2, canvas.height - 20);
+            }
+            clearInterval(intervalId);
           }
         }
+        drawArrows();
         draw();
-        setInterval(draw, 1000);
+        intervalId = setInterval(draw, 1000);
       </script>
     </div>
   </body>
