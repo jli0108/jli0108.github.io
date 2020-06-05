@@ -106,8 +106,7 @@
               [particles[i].dx, particles[j].dx] = [particles[j].dx, particles[i].dx];
               [particles[i].dy, particles[j].dy] = [particles[j].dy, particles[i].dy];
               if (particles[i].colored || particles[j].colored) {
-                particles[i].colored = true;
-                particles[j].colored = true;
+                particles[i].colored = particles[j].colored = true;
               }
             }
           }

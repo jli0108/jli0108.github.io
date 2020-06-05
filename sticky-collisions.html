@@ -16,124 +16,140 @@
     </div>
     <div>
       <script>
-        var n = 300;
-        var r = 3;
-        var x = new Array(n);
-        var y = new Array(n);
-        var dx = new Array(n);
-        var dy = new Array(n);
-        var colored = new Array(n);
-        var width = 1200;
-        var height = 700;
-        var intervalId;
-        var time;
-        var canvas, context, graphCanvas, graphContext;
-        function startSimulation() {
-          document.getElementById("start").disabled = true;
-          document.getElementById("cont").disabled = true;
-          document.getElementById("stop").disabled = false;
-          for (i = 1; i <= n; i++) {
-            x[i] = width * Math.random();
-            y[i] = height * Math.random();
-            dx[i] = 5 * Math.random() - 2.5;
-            dy[i] = 5 * Math.random() - 2.5;
-            colored[i] = false;
-          }
+      class Particle {
+        constructor(x, y, dx, dy, colored) {
+          this.x = x;
+          this.y = y;
+          this.dx = dx;
+          this.dy = dy;
+          this.colored = colored;
+        }
+      }
 
-          for (i = 1; i <= 1; i++) {
-            colored[i] = true;
-          }
-          canvas = document.getElementById("simulation");
-          context = canvas.getContext("2d");
-          graphCanvas = document.getElementById("graph");
-          graphContext = graphCanvas.getContext("2d");
-          graphContext.clearRect(0, 0, 1000, 500);
-          // Including axis titles
-          graphContext.font = "20px Arial";
-          graphContext.textBaseline = "bottom";
-          graphContext.fillText("Time", 500, 400);
-          graphContext.textBaseline = "middle";
-          graphContext.fillText("Number of Particles", 10, 250);
-          time = 200;
-          intervalId = setInterval(drawParticles, 10);
+      var n = 300;
+      var r = 3;
+      var particles = new Array(n);
+      var intervalId, time;
+      var canvas, context, graphCanvas, graphContext;
+
+      function startSimulation() {
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+
+        canvas = document.getElementById("simulation");
+        context = canvas.getContext("2d");
+
+        graphCanvas = document.getElementById("graph");
+        graphContext = graphCanvas.getContext("2d");
+
+        // Drawing axis lines
+        graphContext.beginPath();
+        graphContext.moveTo(200, 0);
+        graphContext.lineTo(200, 350);
+        graphContext.lineTo(1000, 350);
+        graphContext.stroke();
+        graphContext.closePath();
+
+        // Including axis titles
+        graphContext.font = "20px Arial";
+        graphContext.textBaseline = "bottom";
+        graphContext.fillText("Time", 600, 380);
+        graphContext.textBaseline = "middle";
+        graphContext.fillText("Number of Particles", 10, graphCanvas.height / 2);
+        time = 200;
+
+        for (i = 1; i <= n; i++) {
+          particles[i] = new Particle(canvas.width * Math.random(), canvas.height * Math.random(), 5 * Math.random() - 2.5, 5 * Math.random() - 2.5, false);
+        }
+        for (i = 1; i <= 1; i++) {
+          particles[i].colored = true;
         }
 
-        function drawParticles() {
-          context.clearRect(0, 0, width, height);
-          for (i = 1; i <= n; i++) {
-            context.beginPath();
-            if (colored[i]) {
-              context.fillStyle="#0000CD";
-            } else {
-              context.fillStyle="#000000";
-            }
-            // Draws circles of radius 5 at the coordinates on the canvas
-            context.arc(x[i], y[i], r, 0, 2*Math.PI, true);
-            context.closePath();
-            context.fill();
-            dx[i] = (x[i] < 0 || x[i] > width) ? -dx[i] : dx[i];
-            dy[i] = (y[i] < 0 || y[i] > height) ? -dy[i] : dy[i];
-            x[i] += dx[i];
-            y[i] += dy[i];
-          }
-          checkCollisions();
-          plot();
-        }
+        draw();
+      }
 
-        function checkCollisions() {
-          for (i = 1; i < n; i++) {
-            for (j = i + 1; j <= n; j++) {
-              if (distance(i, j) < 2*r) {
-                // inelastic collisions
-                dx[i] = dx[j] = (dx[i] + dx[j]) / 2;
-                dy[i] = dy[j] = (dy[i] + dy[j]) / 2;
-                if (colored[i] || colored[j]) {
-                  colored[i] = true;
-                  colored[j] = true;
-                }
+
+      function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawParticles();
+        checkCollisions();
+        plot();
+        intervalId = requestAnimationFrame(draw);
+      }
+
+      function drawParticles() {
+        for (i = 1; i <= n; i++) {
+          context.beginPath();
+          context.arc(particles[i].x, particles[i].y, r, 0, 2*Math.PI, true);
+          if (particles[i].colored) {
+            context.fillStyle="#0000CD"; // blue
+          } else {
+            context.fillStyle="#000000"; // black
+          }
+          context.fill();
+          context.closePath();
+          particles[i].dx = (particles[i].x + particles[i].dx < r || particles[i].x > canvas.width - r) ? -particles[i].dx : particles[i].dx;
+          particles[i].dy = (particles[i].y + particles[i].dy < r || particles[i].y > canvas.height - r) ? -particles[i].dy : particles[i].dy;
+          particles[i].x += particles[i].dx;
+          particles[i].y += particles[i].dy;
+        }
+      }
+
+      function checkCollisions() {
+        for (i = 1; i < n; i++) {
+          for (j = i + 1; j <= n; j++) {
+            if (distance(i, j) < 2*r) {
+              // inelastic collisions
+              particles[i].dx = particles[j].dx = (particles[i].dx + particles[j].dx) / 2;
+              particles[i].dy = particles[j].dy = (particles[i].dy + particles[j].dy) / 2;
+              if (particles[i].colored || particles[j].colored) {
+                particles[i].colored = particles[j].colored = true;
               }
             }
           }
         }
+      }
 
-        function distance(i, j) {
-          return Math.sqrt(Math.pow(x[i] - x[j], 2) + Math.pow(y[i] - y[j], 2));
-        }
+      function distance(i, j) {
+        return Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
+      }
 
-        function numColored() {
-          var sum = 0;
-          for (i = 1; i <= n; i++) {
-            if (colored[i]) {
-              sum++;
-            }
+      function numColored() {
+        var sum = 0;
+        for (i = 1; i <= n; i++) {
+          if (particles[i].colored) {
+            sum++;
           }
-          return sum;
         }
+        return sum;
+      }
 
-        function plot() {
+      function plot() {
+        if (time <= graphCanvas.width) {
           time += 0.5;
-          if (time <= 1000) {
-            graphContext.beginPath();
-            graphContext.fillStyle="#000000";
-            graphContext.arc(time, 350 - numColored(), 1, 0, 2*Math.PI, true);
-            graphContext.closePath();
-            graphContext.fill();
-          }
+          graphContext.beginPath();
+          graphContext.arc(time, 350 - numColored(), 1, 0, 2*Math.PI, true);
+          graphContext.fillStyle="#000000";
+          graphContext.fill();
+          graphContext.closePath();
         }
+      }
 
-        function continueSimulation() {
-          intervalId = setInterval(drawParticles, 10);
-          document.getElementById("start").disabled = true;
-          document.getElementById("cont").disabled = true;
-          document.getElementById("stop").disabled = false;
-        }
+      function continueSimulation() {
+        draw();
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+      }
 
-        function stopSimulation() {
-          clearInterval(intervalId);
-          document.getElementById("start").disabled = false;
-          document.getElementById("cont").disabled = false;
-          document.getElementById("stop").disabled = true;
-        }
+      function stopSimulation() {
+        cancelAnimationFrame(intervalId);
+        document.getElementById("start").disabled = false;
+        document.getElementById("cont").disabled = false;
+        document.getElementById("stop").disabled = true;
+      }
+
       </script>
       <canvas id="simulation" width="1200" height="700"></canvas><br />
       <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
