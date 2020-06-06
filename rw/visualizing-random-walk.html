@@ -8,17 +8,20 @@
     <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css"
   </head>
   <body align="center">
-    <div class="topnav">
-      <a href="../index.html" class="active">Home</a>
-      <a href="../resume.pdf" class="active">Resume</a>
-      <a href="../summer2020.html" class="active">Summer 2020</a>
-    </div>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../resume.pdf">Resume</a></li>
+        <li><a href="../summer2020.html">Summer 2020</a></li>
+        <li><a href="#" onclick="return false;">This button does nothing but I intend to add more items to the menu eventually</a></li>
+      </ul>
+    </nav>
     <div>
       <p>
         <b>One of those gambler setups.</b> You worked all summer at McDonald's to earn $5. You decide to gamble it all away by playing the hottest new game, chess.<br>
         Since your chess skills are only average, you either win or lose $1 each game, with equal probability. You stop when you go broke or you make bank with $10.
       </p>
-      <canvas id="randomWalk" width=1000, height=300></canvas>
+      <canvas id="randomWalk" width=1000, height=150></canvas>
       <img id="dollars" src="dollar bills 5.png" width = 500></img>
       <script>
 
@@ -34,7 +37,7 @@
         var inactiveStateColor = "#0095DD";
         var intervalId;
         for (i = 0; i < n; i++) {
-          states[i] = { x: (canvas.width - 2 * padding) * i / (n-1) + padding, y: canvas.height / 2, active: false};
+          states[i] = { x: (canvas.width - 2 * padding) * i / (n-1) + padding, y: canvas.height / 2 - 20, active: false};
         }
 
         function drawStates() {
