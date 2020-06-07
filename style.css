@@ -35,6 +35,7 @@ nav h1 {
   color: white;
 }
 nav ul {
+  display: flex;
   float: left;
   list-style-type: none;
 }
