@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
-    <meta charset="utf-8">
     <title>Gacha</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css"
   </head>
@@ -21,6 +21,13 @@
       </div>
     </nav>
     <script src="nav.js"></script>
+    <div>
+      <button onclick="roll();">Click here to roll</button>
+      <p id="output">Let's see what you got!</p>
+      <p id="count">Number of rolls: 0</p>
+      <p><b>Your rolls:</b></p>
+      <ul id="rolls" style="text-align:left;display:inline-block;"></ul>
+    </div>
     <script>
       class Card {
         constructor(name, chance) {
@@ -81,12 +88,5 @@
         ul.appendChild(li);
       }
     </script>
-    <div>
-      <button onclick="roll();">Click here to roll</button>
-      <p id="output">Let's see what you got!</p>
-      <p id="count">Number of rolls: 0</p>
-      <p><b>Your rolls:</b></p>
-      <ul id="rolls"></ul>
-    </div>
   </body>
 </html>
