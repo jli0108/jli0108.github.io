@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <title>Pazudora simulation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css"
+  </head>
+  <nav>
+    <ul class="navList">
+      <li><a href="..">Home</a></li>
+      <li><a href="resume.pdf">Resume</a></li>
+      <li><a href="summer2020.html">Summer 2020</a></li>
+    </ul>
+    <div class="overlayMenuButton">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+  <script src="nav.js"></script>
+    <div>
+      <button id="print">Generate new board</button>
+    </div>
+    <div>
+      <h1>Board</h1>
+      <p id="debug"></p>
+      <p id="combos"></p>
+    </div>
+    <script>
+
+    class Orb {
+      constructor(color, matched) {
+        this.color = color; /* using 0,1,2,3,4,5 for colors */
+        this.matched = matched; /* used to process matches */
+      }
+    }
+
+    var maxRows = 5;
+    var maxCols = 6;
+
+    var board = new Array(maxRows);
+
+    for (var i = 0; i < maxRows; i++) {
+      board[i] = new Array(maxCols);
+    }
+
+    function resetBoard() {
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          board[i][j] = new Orb(Math.floor(6 * Math.random()), false);
+        }
+      }
+    }
+
+    function printBoard() {
+      resetBoard();
+      countCombos();
+      var debug = document.getElementById("debug");
+      debug.innerHTML = "";
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          switch (board[i][j].color) {
+            case (0):
+              debug.append("H");
+              break;
+            case (1):
+              debug.append("R");
+              break;
+            case (2):
+              debug.append("B");
+              break;
+            case (3):
+              debug.append("G");
+              break;
+            case (4):
+              debug.append("L");
+              break;
+            case (5):
+              debug.append("D");
+              break;
+          }
+        }
+        if (i < maxRows - 1) {
+          debug.appendChild(document.createElement("br"));
+        }
+      }
+    }
+    function noAdjacentMatch(i, j) {
+      /* checks whether the orb at row i, column j is part of another match (same color) */
+      /* this can happen if there is something like HHHRBG \n HHHGRB */
+      if ((i > 0 && board[i][j].color == board[i - 1][j].color && board[i - 1][j].matched) ||
+          (i < maxRows - 1 && board[i][j].color == board[i + 1][j].color && board[i + 1][j].matched) ||
+          (j > 0 && board[i][j].color == board[i][j - 1].color && board[i][j - 1].matched) ||
+          (j < maxCols - 1 && board[i][j].color == board[i][j + 1].color && board[i][j + 1].matched)) {
+          return false;
+      } else {
+        return true;
+      }
+    }
+    function countCombos() {
+      var comboCount = 0;
+      /* check 3-match in row for each column */
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols - 2; j++) {
+          if (board[i][j].color == board[i][j + 1].color && board[i][j + 1].color == board[i][j + 2].color) {
+            /* only contributes to combo count if it hasn't already been part of a match */
+            if (!board[i][j].matched && !board[i][j + 1].matched && !board[i][j + 2].matched
+            && noAdjacentMatch(i, j) && noAdjacentMatch(i, j + 1) && noAdjacentMatch(i, j + 2)) {
+              comboCount++;
+            }
+            board[i][j].matched = board[i][j + 1].matched = board[i][j + 2].matched = true;
+          }
+        }
+      }
+      for (var j = 0; j < maxCols; j++) {
+        for (var i = 0; i < maxRows - 2; i++) {
+          if (board[i][j].color == board[i + 1][j].color && board[i + 1][j].color == board[i + 2][j].color) {
+            if (!board[i][j].matched && !board[i + 1][j].matched && !board[i + 2][j].matched
+            && noAdjacentMatch(i, j) && noAdjacentMatch(i + 1, j) && noAdjacentMatch(i + 2, j)) {
+              comboCount++;
+            }
+            board[i][j].matched = board[i + 1][j].matched = board[i + 2][j].matched = true;
+          }
+        }
+      }
+      document.getElementById("combos").innerHTML = "Combos: " + comboCount;
+    }
+    document.getElementById("print").addEventListener("click", printBoard);
+    document.getElementById("countCombos").addEventListener("click", countCombos);
+    </script>
+  </body>
+</html>
