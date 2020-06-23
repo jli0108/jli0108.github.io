@@ -19,12 +19,13 @@
       <div class="line3"></div>
     </div>
   </nav>
-  <script src="nav.js"></script>
+  <script src="../nav.js"></script>
     <div>
       <button id="print">Generate new board</button>
     </div>
-    <div>
+    <div align=center>
       <h1>Board</h1>
+      <canvas id="board" width=300 height=250></canvas>
       <p id="debug"></p>
       <p id="combos"></p>
     </div>
@@ -58,29 +59,48 @@
       resetBoard();
       countCombos();
       var debug = document.getElementById("debug");
+      var canvas = document.getElementById("board");
+      var ctx = canvas.getContext("2d");
+      var images = new Array(maxRows);
+      for (var i = 0; i < maxRows; i++) {
+        images[i] = new Array(maxCols);
+      }
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          images[i][j] = new Image();
+        }
+      }
       debug.innerHTML = "";
       for (var i = 0; i < maxRows; i++) {
         for (var j = 0; j < maxCols; j++) {
           switch (board[i][j].color) {
             case (0):
               debug.append("H");
+              images[i][j].src = "orb-H.png";
               break;
             case (1):
               debug.append("R");
+              images[i][j].src = "orb-R.png";
               break;
             case (2):
               debug.append("B");
+              images[i][j].src = "orb-B.png";
               break;
             case (3):
               debug.append("G");
+              images[i][j].src = "orb-G.png";
               break;
             case (4):
               debug.append("L");
+              images[i][j].src = "orb-L.png";
               break;
             case (5):
               debug.append("D");
+              images[i][j].src = "orb-D.png";
               break;
           }
+          ctx.drawImage(images[i][j], j*50, i*50, 50, 50);
+          console.log("image at " + i + ", " + j);
         }
         if (i < maxRows - 1) {
           debug.appendChild(document.createElement("br"));
@@ -128,7 +148,6 @@
       document.getElementById("combos").innerHTML = "Combos: " + comboCount;
     }
     document.getElementById("print").addEventListener("click", printBoard);
-    document.getElementById("countCombos").addEventListener("click", countCombos);
     </script>
   </body>
 </html>
