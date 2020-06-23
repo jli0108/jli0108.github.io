@@ -28,6 +28,11 @@
       <p id="combos"></p>
       <button id="print">Generate new board</button>
     </div>
+    <div>
+      Number of trials: <input id="trials" type="number">
+      <button id="average">Compute average number of combos</button><br>
+      <p id="averageResult"></p>
+    </div>
     <script>
 
     class Orb {
@@ -56,7 +61,7 @@
 
     function printBoard() {
       resetBoard();
-      countCombos();
+      document.getElementById("combos").innerHTML = "Combos: " + countCombos();
       var debug = document.getElementById("debug");
       var canvas = document.getElementById("board");
       var ctx = canvas.getContext("2d");
@@ -99,7 +104,6 @@
               break;
           }
           ctx.drawImage(images[i][j], j*50, i*50, 50, 50);
-          console.log("image at " + i + ", " + j);
         }
         if (i < maxRows - 1) {
           debug.appendChild(document.createElement("br"));
@@ -144,9 +148,25 @@
           }
         }
       }
-      document.getElementById("combos").innerHTML = "Combos: " + comboCount;
+      return + comboCount;
     }
     document.getElementById("print").addEventListener("click", printBoard);
+
+    function average() {
+      var trials = document.getElementById("trials").value;
+      var combos = 0;
+      if (trials > 0) {
+        for (var i = 0; i < trials; i++) {
+          resetBoard();
+          combos += countCombos();
+        }
+        combos /= trials;
+        document.getElementById("averageResult").innerHTML = "Average combos: " + combos;
+      } else {
+        document.getElementById("averageResult").innerHTML = "Unexpected input";
+      }
+    }
+    document.getElementById("average").addEventListener("click", average);
     </script>
   </body>
 </html>
