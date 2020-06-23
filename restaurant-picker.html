@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css"
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css">
+    <link rel="icon" type="image/png" href="favicon/favicon1.png">
   </head>
   <body align="center">
     <nav>
@@ -59,7 +60,6 @@
       function roll() {
         count++;
         var rng = Math.random();
-        console.log(rng);
         var rollValue;
         var i = 0;
         while (rng >= cdf(i)) {
@@ -73,9 +73,9 @@
       }
 
       function cdf(x) {
+        /* returns probability of getting any of the first (x+1) cards */
         var sum = 0;
-        var i;
-        for (i = 0; i <= x; i++) {
+        for (var i = 0; i <= x; i++) {
           sum += cards[i].chance;
         }
         return sum;
