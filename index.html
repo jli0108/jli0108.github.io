@@ -1,114 +1,244 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Home - jli0108</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <title>Pazudora simulation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css">
+    <link rel="icon" type="image/png" href="../favicon/favicon1.png">
+  </head>
+  <nav>
+    <ul class="navList">
+      <li><a href="..">Home</a></li>
+      <li><a href="resume.pdf">Resume</a></li>
+      <li><a href="summer2020.html">Summer 2020</a></li>
+    </ul>
+    <div class="overlayMenuButton">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+  <script src="../nav.js"></script>
+    <div align=center>
+      <h1>Board</h1>
+      <canvas id="board" width=300 height=250></canvas>
+      <p id="debug"></p>
+      <p id="combos"></p>
+      <button id="print">Generate new board</button>
+    </div>
+    <div>
+      Number of trials: <input id="trials" type="number" value="10000">
+      <button id="getResults">Compute average number of combos</button><br>
+      <p id="results"></p>
+    </div>
+    <script>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css">
-  <link rel="icon" type="image/png" href="favicon/favicon1.png">
-  <!-- for LaTeX -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
-  <body>
-    <nav>
-      <ul class="navList">
-        <li><a href=".">Home</a></li>
-        <li><a href="resume.pdf">Resume</a></li>
-        <li><a href="summer2020.html">Summer 2020</a></li>
-      </ul>
-      <div class="overlayMenuButton">
-        <div class="line1"></div>
-        <div class="line2"></div>
-        <div class="line3"></div>
-      </div>
-    </nav>
-    <script src="nav.js"></script>
-    <div>
-      <h1 align="center">jli0108</h1>
-      <p align="center">I am an undergraduate Mathematics and Computer Science student at UMD.</p>
-      <p align="center"><i>This site is a WIP</i></p>
-      <img src="cover picture 4.png" alt="Unemployed" style="display:block;max-width:50%;height:auto;margin:auto auto"></img>
-      <p align="center">source: myself</p>
-      <h3>Stats</h3>
-      <ul>
-        <li>
-          Rank 826 on PAD<br>
-          ID: 357,496,289 (NA) 354,225,959 (JP)
-        </li>
-        <li>
-          495 wins in Shadowverse, B3 (Rotation) B1 (Unlimited)<br>
-          ID: 900 950 801
-        </li>
-        <li>
-          Lv 85 in NieR:Automata, 100% Quest Completion
-        <li>
-          SINoALICE... soon
-        <li>
-          Several LeetCode problems solved, even more attempted
-        </li>
-        <li>
-          Semi-lingual (???)
-        </li>
-        <li>
-          Lots of miscellaneous ideas...
-        </li>
-      </ul>
-    </div>
-    <!--Particle simulation-->
-    <div>
-      <h2>Particle Simulation</h2>
-      <a href="particle-simulation.html">Click here</a>
-    </div>
-    <!--Diffusion-->
-    <div>
-      <h2>Diffusion</h2>
-      <a href="diffusion.html">Click here</a>
-    </div>
-    <div>
-      <h2>Sticky collisions</h2>
-      <a href="sticky-collisions.html">Click here</a>
-    </div>
-    <!--Thermodyanmics-->
-    <div>
-      <h2>Thermodynamics</h2>
-      <a href="thermodynamics.html">Click here</a>
-    </div>
-    <!--corona-->
-    <div>
-      <h2>Corona ('rona)</h2>
-      <a href="corona.html">Click here</a>
-    </div>
-    <!--gacha-->
-    <div>
-      <h2>Gacha!</h2>
-      <a href="gacha.html">Click here</a><br>
-      <a href="restaurant-picker.html">Restaurant picker even though nobody goes to restaurants anymore</a>
-    </div>
-    <div>
-      <h2>Visualizing Random Walk</h2>
-      <a href="visualizing-random-walk">Click here</a>
-    </div>
-    <div>
-      <h2>パズドラ Problem</h2>
-      <a href="https://github.com/jli0108/pazudora-problem">Progress</a> (<a href="pazudora_problem.pdf">pdf</a>)<br>
-      This is a long-term project concerning a combinatorics/probability problem that as far as I know, has not been well-studied further than a couple of Monte Carlo simulations, and certainly not in full generality.<br>
-      I hope I can understand the problem fully within my lifetime (preferably sooner). (>.<)<br>
-      <a href="pazudora-simulation">simulation</a>
-    </div>
-    <div>
-      <h2>Currently listening to:</h2>
-      <!--I should make this random-->
-      <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
-      <div class="embed-container"><iframe width="560px" height="315px" src="https://www.youtube.com/embed/qA5GjlDdlvA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-      <br><a href="Aimer眠りの森歌詞.html">眠りの森 Lyrics (with furigana!)</a>
-      <br><a href="ヨルシカ花に亡霊歌詞.html">花に亡霊 Lyrics</a>
-    </div>
-    <div>
-      <p>Finding the second moment and taking the square root is not the same as finding the first moment! I'm looking at you physicists...😠</p>
-      <p>In general, it is NOT true that \(\sqrt{\mathbb{E}(X^2)} = \mathbb{E}(X)\).</p>
-    </div>
+    class Orb {
+      constructor(color, matched, adjacentMatch) {
+        this.color = color; /* using 0,1,2,3,4,5 for colors */
+        this.matched = matched; /* used to process matches */
+        this.adjacentMatch = adjacentMatch;
+      }
+    }
+
+    var maxRows = 5;
+    var maxCols = 6;
+
+    var board = new Array(maxRows);
+
+    for (var i = 0; i < maxRows; i++) {
+      board[i] = new Array(maxCols);
+    }
+
+    function resetBoard() {
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+
+          board[i][j] = new Orb(Math.floor(6 * Math.random()), false, false);
+
+        }
+      }
+    }
+
+    function printBoard() {
+      resetBoard();
+      document.getElementById("combos").innerHTML = "Combos: " + countCombos();
+      var debug = document.getElementById("debug");
+      var canvas = document.getElementById("board");
+      var ctx = canvas.getContext("2d");
+      var images = new Array(maxRows);
+      for (var i = 0; i < maxRows; i++) {
+        images[i] = new Array(maxCols);
+      }
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          images[i][j] = new Image();
+        }
+      }
+      debug.innerHTML = "";
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          switch (board[i][j].color) {
+            case (0):
+              debug.append("H");
+              images[i][j].src = "orb-H.png";
+              break;
+            case (1):
+              debug.append("R");
+              images[i][j].src = "orb-R.png";
+              break;
+            case (2):
+              debug.append("B");
+              images[i][j].src = "orb-B.png";
+              break;
+            case (3):
+              debug.append("G");
+              images[i][j].src = "orb-G.png";
+              break;
+            case (4):
+              debug.append("L");
+              images[i][j].src = "orb-L.png";
+              break;
+            case (5):
+              debug.append("D");
+              images[i][j].src = "orb-D.png";
+              break;
+          }
+          ctx.drawImage(images[i][j], j*50, i*50, 50, 50);
+        }
+        if (i < maxRows - 1) {
+          debug.appendChild(document.createElement("br"));
+        }
+      }
+    }
+    function adjacentMatch(i, j) {
+      /* checks whether the orb at row i, column j is part of another match (same color) */
+      if ((i > 0 && board[i][j].color == board[i - 1][j].color && board[i - 1][j].matched) ||
+            (i < maxRows - 1 && board[i][j].color == board[i + 1][j].color && board[i + 1][j].matched) ||
+            (j > 0 && board[i][j].color == board[i][j - 1].color && board[i][j - 1].matched) ||
+            (j < maxCols - 1 && board[i][j].color == board[i][j + 1].color && board[i][j + 1].matched)) {
+            return true;
+      }
+    }
+    /*
+    BUGGED! DO NOT USE
+    IT OVERCOUNTS IN CERTAIN CASES!!!
+    function countCombos() {
+
+      var comboCount = 0;
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols - 2; j++) {
+          if (board[i][j].color == board[i][j + 1].color && board[i][j + 1].color == board[i][j + 2].color) {
+            if (!board[i][j].matched && !board[i][j + 1].matched && !board[i][j + 2].matched
+            && !adjacentMatch(i, j) && !adjacentMatch(i, j + 1) && !adjacentMatch(i, j + 2)) {
+              comboCount++;
+            }
+            board[i][j].matched = board[i][j + 1].matched = board[i][j + 2].matched = true;
+          }
+        }
+      }
+      for (var j = 0; j < maxCols; j++) {
+        for (var i = 0; i < maxRows - 2; i++) {
+          if (board[i][j].color == board[i + 1][j].color && board[i + 1][j].color == board[i + 2][j].color) {
+            if (!board[i][j].matched && !board[i + 1][j].matched && !board[i + 2][j].matched
+            && !adjacentMatch(i, j) && !adjacentMatch(i + 1, j) && !adjacentMatch(i + 2, j)) {
+              comboCount++;
+            }
+            board[i][j].matched = board[i + 1][j].matched = board[i + 2][j].matched = true;
+          }
+        }
+      }
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          board[i][j].matched = false;
+        }
+      }
+      return comboCount;
+    }
+    */
+    function countCombos() {
+      var comboCount = 0;
+      function checkMatches(i, j) {
+        /* checks if orb at position i,j is part of a 3-match; if so, labels it as matched = true and does the same for other orbs within the same match*/
+        for (var k = 0; k < 3; k++) {
+          if ((i - k >= 0) && (i - k + 2 < maxRows) && board[i - k][j].color == board[i - k + 1][j].color && board[i - k + 1][j].color == board[i - k + 2][j].color) {
+            if (!board[i - k + 2][j].matched && !board[i - k + 1][j].matched && !board[i - k][j].matched
+            && !adjacentMatch(i - k + 2, j) && !adjacentMatch(i - k + 1, j) && !adjacentMatch(i - k, j)) {
+              comboCount++;
+            }
+            board[i - k + 2][j].matched = board[i - k + 1][j].matched = board[i - k][j].matched = true;
+          }
+          if ((j - k >= 0) && (j - k + 2 < maxCols) && board[i][j - k].color == board[i][j - k + 1].color && board[i][j - k + 1].color == board[i][j - k + 2].color) {
+            if (!board[i][j - k + 2].matched && !board[i][j - k + 1].matched && !board[i][j - k].matched
+            && !adjacentMatch(i, j - k + 2) && !adjacentMatch(i, j - k + 1) && !adjacentMatch(i, j - k)) {
+              comboCount++;
+            }
+            board[i][j - k + 2].matched = board[i][j - k + 1].matched = board[i][j - k].matched = true;
+          }
+        }
+        board[i][j].adjacentMatch = true;
+        if (i - 1 >= 0 && board[i][j].color == board[i - 1][j].color && !board[i - 1][j].adjacentMatch) {
+          checkMatches(i - 1, j);
+        }
+        if (i + 1 < maxRows && board[i][j].color == board[i + 1][j].color && !board[i + 1][j].adjacentMatch) {
+          checkMatches(i + 1, j);
+        }
+        if (j - 1 >= 0 && board[i][j].color == board[i][j - 1].color && !board[i][j - 1].adjacentMatch) {
+          checkMatches(i, j - 1);
+        }
+        if (j + 1 < maxCols && board[i][j].color == board[i][j + 1].color && !board[i][j + 1].adjacentMatch) {
+          checkMatches(i, j + 1);
+        }
+      }
+
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          if (!board[i][j].adjacentMatch) {
+            checkMatches(i, j);
+          }
+        }
+      }
+      /* resetting matched fields in case i want to call the function again */
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          board[i][j].matched = false;
+          board[i][j].adjacentMatch;
+        }
+      }
+      return comboCount;
+    }
+    document.getElementById("print").addEventListener("click", printBoard);
+
+    function getResults() {
+      var trials = document.getElementById("trials").value;
+      var combos = [0,0,0,0,0,0,0,0,0,0,0,0];
+      var result = "";
+      var average = 0;
+      if (trials > 0) {
+        for (var i = 0; i < trials; i++) {
+          resetBoard();
+          combos[countCombos()]++;
+          average += countCombos();
+        }
+        average /= trials;
+        for (var i = 0; i < 11; i++) {
+          result += i + " combo";
+          if (i != 1) {
+            result += "s";
+          }
+          result += ": " + combos[i] / trials;
+          if (i < 10) {
+            result += "<br>";
+          }
+        }
+        document.getElementById("results").innerHTML = "Average combos: " + average + "<br>" + "Distribution: <br>" + result;
+      } else {
+        document.getElementById("results").innerHTML = "Unexpected input";
+      }
+    }
+    document.getElementById("getResults").addEventListener("click", getResults);
+    </script>
   </body>
 </html>
