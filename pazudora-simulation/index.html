@@ -29,16 +29,17 @@
       <button id="print">Generate new board</button>
     </div>
     <div>
-      Number of trials: <input id="trials" type="number">
-      <button id="average">Compute average number of combos</button><br>
-      <p id="averageResult"></p>
+      Number of trials: <input id="trials" type="number" value="10000">
+      <button id="getResults">Compute average number of combos</button><br>
+      <p id="results"></p>
     </div>
     <script>
 
     class Orb {
-      constructor(color, matched) {
+      constructor(color, matched, checkedMatches) {
         this.color = color; /* using 0,1,2,3,4,5 for colors */
         this.matched = matched; /* used to process matches */
+        this.checkedMatches = checkedMatches;
       }
     }
 
@@ -54,7 +55,9 @@
     function resetBoard() {
       for (var i = 0; i < maxRows; i++) {
         for (var j = 0; j < maxCols; j++) {
-          board[i][j] = new Orb(Math.floor(6 * Math.random()), false);
+
+          board[i][j] = new Orb(Math.floor(6 * Math.random()), false, false);
+
         }
       }
     }
@@ -110,27 +113,26 @@
         }
       }
     }
-    function noAdjacentMatch(i, j) {
+    function adjacentMatch(i, j) {
       /* checks whether the orb at row i, column j is part of another match (same color) */
-      /* this can happen if there is something like HHHRBG \n HHHGRB */
       if ((i > 0 && board[i][j].color == board[i - 1][j].color && board[i - 1][j].matched) ||
-          (i < maxRows - 1 && board[i][j].color == board[i + 1][j].color && board[i + 1][j].matched) ||
-          (j > 0 && board[i][j].color == board[i][j - 1].color && board[i][j - 1].matched) ||
-          (j < maxCols - 1 && board[i][j].color == board[i][j + 1].color && board[i][j + 1].matched)) {
-          return false;
-      } else {
-        return true;
+            (i < maxRows - 1 && board[i][j].color == board[i + 1][j].color && board[i + 1][j].matched) ||
+            (j > 0 && board[i][j].color == board[i][j - 1].color && board[i][j - 1].matched) ||
+            (j < maxCols - 1 && board[i][j].color == board[i][j + 1].color && board[i][j + 1].matched)) {
+            return true;
       }
     }
+    /*
+    BUGGED! DO NOT USE
+    IT OVERCOUNTS IN CERTAIN CASES!!!
     function countCombos() {
+
       var comboCount = 0;
-      /* check 3-match in row for each column */
       for (var i = 0; i < maxRows; i++) {
         for (var j = 0; j < maxCols - 2; j++) {
           if (board[i][j].color == board[i][j + 1].color && board[i][j + 1].color == board[i][j + 2].color) {
-            /* only contributes to combo count if it hasn't already been part of a match */
             if (!board[i][j].matched && !board[i][j + 1].matched && !board[i][j + 2].matched
-            && noAdjacentMatch(i, j) && noAdjacentMatch(i, j + 1) && noAdjacentMatch(i, j + 2)) {
+            && !adjacentMatch(i, j) && !adjacentMatch(i, j + 1) && !adjacentMatch(i, j + 2)) {
               comboCount++;
             }
             board[i][j].matched = board[i][j + 1].matched = board[i][j + 2].matched = true;
@@ -141,32 +143,102 @@
         for (var i = 0; i < maxRows - 2; i++) {
           if (board[i][j].color == board[i + 1][j].color && board[i + 1][j].color == board[i + 2][j].color) {
             if (!board[i][j].matched && !board[i + 1][j].matched && !board[i + 2][j].matched
-            && noAdjacentMatch(i, j) && noAdjacentMatch(i + 1, j) && noAdjacentMatch(i + 2, j)) {
+            && !adjacentMatch(i, j) && !adjacentMatch(i + 1, j) && !adjacentMatch(i + 2, j)) {
               comboCount++;
             }
             board[i][j].matched = board[i + 1][j].matched = board[i + 2][j].matched = true;
           }
         }
       }
-      return + comboCount;
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          board[i][j].matched = false;
+        }
+      }
+      return comboCount;
+    }
+    */
+    function countCombos() {
+      var comboCount = 0;
+      function checkMatches(i, j) {
+        /* checks if orb at position i,j is part of a 3-match; if so, labels it as matched = true and does the same for other orbs within the same match*/
+        for (var k = 0; k < 3; k++) {
+          if ((i - k >= 0) && (i - k + 2 < maxRows) && board[i - k][j].color == board[i - k + 1][j].color && board[i - k + 1][j].color == board[i - k + 2][j].color) {
+            if (!board[i - k + 2][j].matched && !board[i - k + 1][j].matched && !board[i - k][j].matched
+            && !adjacentMatch(i - k + 2, j) && !adjacentMatch(i - k + 1, j) && !adjacentMatch(i - k, j)) {
+              comboCount++;
+            }
+            board[i - k + 2][j].matched = board[i - k + 1][j].matched = board[i - k][j].matched = true;
+          }
+          if ((j - k >= 0) && (j - k + 2 < maxCols) && board[i][j - k].color == board[i][j - k + 1].color && board[i][j - k + 1].color == board[i][j - k + 2].color) {
+            if (!board[i][j - k + 2].matched && !board[i][j - k + 1].matched && !board[i][j - k].matched
+            && !adjacentMatch(i, j - k + 2) && !adjacentMatch(i, j - k + 1) && !adjacentMatch(i, j - k)) {
+              comboCount++;
+            }
+            board[i][j - k + 2].matched = board[i][j - k + 1].matched = board[i][j - k].matched = true;
+          }
+        }
+        board[i][j].checkedMatches = true;
+        if (i - 1 >= 0 && board[i][j].color == board[i - 1][j].color && !board[i - 1][j].checkedMatches) {
+          checkMatches(i - 1, j);
+        }
+        if (i + 1 < maxRows && board[i][j].color == board[i + 1][j].color && !board[i + 1][j].checkedMatches) {
+          checkMatches(i + 1, j);
+        }
+        if (j - 1 >= 0 && board[i][j].color == board[i][j - 1].color && !board[i][j - 1].checkedMatches) {
+          checkMatches(i, j - 1);
+        }
+        if (j + 1 < maxCols && board[i][j].color == board[i][j + 1].color && !board[i][j + 1].checkedMatches) {
+          checkMatches(i, j + 1);
+        }
+      }
+
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          if (!board[i][j].checkedMatches) {
+            checkMatches(i, j);
+          }
+        }
+      }
+      /* resetting matched fields in case i want to call the function again */
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          board[i][j].matched = false;
+          board[i][j].checkedMatches;
+        }
+      }
+      return comboCount;
     }
     document.getElementById("print").addEventListener("click", printBoard);
 
-    function average() {
+    function getResults() {
       var trials = document.getElementById("trials").value;
-      var combos = 0;
+      var combos = [0,0,0,0,0,0,0,0,0,0,0,0];
+      var result = "";
+      var average = 0;
       if (trials > 0) {
         for (var i = 0; i < trials; i++) {
           resetBoard();
-          combos += countCombos();
+          combos[countCombos()]++;
+          average += countCombos();
         }
-        combos /= trials;
-        document.getElementById("averageResult").innerHTML = "Average combos: " + combos;
+        average /= trials;
+        for (var i = 0; i < 11; i++) {
+          result += i + " combo";
+          if (i != 1) {
+            result += "s";
+          }
+          result += ": " + combos[i] / trials;
+          if (i < 10) {
+            result += "<br>";
+          }
+        }
+        document.getElementById("results").innerHTML = "Average combos: " + average + "<br>" + "Distribution: <br>" + result;
       } else {
-        document.getElementById("averageResult").innerHTML = "Unexpected input";
+        document.getElementById("results").innerHTML = "Unexpected input";
       }
     }
-    document.getElementById("average").addEventListener("click", average);
+    document.getElementById("getResults").addEventListener("click", getResults);
     </script>
   </body>
 </html>
