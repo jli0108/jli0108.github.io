@@ -42,11 +42,12 @@
 
         var padding = canvas.width * 0.05;
         var radius = Math.min((canvas.width - 2 * padding - (n - 1) * canvas.width * 0.06) / 10, 20);
+        canvas.height = 2 * radius + padding;
         var activeStateColor = "red";
         var inactiveStateColor = "#0095DD";
         var intervalId;
         for (i = 0; i < n; i++) {
-          states[i] = { x: (canvas.width - 2 * padding) * i / (n-1) + padding, y: canvas.height / 2 - 20, active: false};
+          states[i] = { x: (canvas.width - 2 * padding) * i / (n-1) + padding, y: canvas.height / 2, active: false};
         }
 
         function drawStates() {
