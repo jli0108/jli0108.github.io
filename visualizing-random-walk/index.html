@@ -29,6 +29,7 @@
       </p>
       <canvas id="randomWalk" width=1000, height=150></canvas>
       <img id="dollars" src="dollar bills 5.png" alt="dollars" width=500, style="display:block;max-width:100%;height:auto;margin:auto auto"></img>
+      <p id="result">
       <script>
 
         var canvas = document.getElementById("randomWalk");
@@ -102,14 +103,11 @@
               m--;
             }
           } else {
+            var res = document.getElementById("result");
             if (m == 0) {
-              ctx.font = "16px Arial";
-              ctx.fillStyle = "black";
-              ctx.fillText("You are now broke.", canvas.width / 2, canvas.height - 20);
+              res.innerHTML = "You are now broke.";
             } else if (m == n - 1) {
-              ctx.font = "16px Arial";
-              ctx.fillStyle = "black";
-              ctx.fillText("You doubled your money!", canvas.width / 2, canvas.height - 20);
+              res.innerHTML = "You doubled your money!";
             }
             clearInterval(intervalId);
           }
