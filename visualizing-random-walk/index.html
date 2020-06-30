@@ -28,7 +28,7 @@
         Since your chess skills are only average, you either win or lose $1 each game, with equal probability. You stop when you go broke or you make bank with $10.
       </p>
       <canvas id="randomWalk" width=1000, height=150></canvas>
-      <img id="dollars" src="dollar bills 5.png" width = 500></img>
+      <img id="dollars" src="dollar bills 5.png" alt="dollars" width=500, style="display:block;max-width:100%;height:auto;margin:auto auto"></img>
       <script>
 
         var canvas = document.getElementById("randomWalk");
@@ -55,10 +55,10 @@
             ctx.arc(states[i].x, states[i].y, radius, 0, Math.PI*2);
             ctx.fillStyle = (states[i].active) ? activeStateColor : inactiveStateColor;
             ctx.fill();
-            ctx.font = "20px Comic Sans";
+            ctx.font = radius + "px Comic Sans";
             ctx.fillStyle = "black";
             ctx.textAlign = "center";
-            ctx.fillText(i, states[i].x, states[i].y + 5);
+            ctx.fillText(i, states[i].x, states[i].y);
             ctx.closePath();
           }
         }
@@ -71,16 +71,16 @@
             ctx.stroke();
             if (i < n - 2) {
               // drawing left arrow heads
-              ctx.moveTo(states[i].x + radius + 5, states[i].y - 5);
+              ctx.moveTo(states[i].x + radius + canvas.width * 0.005, states[i].y - canvas.width * 0.005);
               ctx.lineTo(states[i].x + radius, states[i].y);
-              ctx.lineTo(states[i].x + radius + 5, states[i].y + 5);
+              ctx.lineTo(states[i].x + radius + canvas.width * 0.005, states[i].y + canvas.width * 0.005);
               ctx.stroke();
             }
             if (i > 0) {
               // drawing right arrow heads
-              ctx.moveTo(states[i+1].x - radius - 5, states[i+1].y - 5);
+              ctx.moveTo(states[i+1].x - radius - canvas.width * 0.005, states[i+1].y - canvas.width * 0.005);
               ctx.lineTo(states[i+1].x - radius, states[i].y);
-              ctx.lineTo(states[i+1].x - radius - 5, states[i+1].y + 5);
+              ctx.lineTo(states[i+1].x - radius - canvas.width * 0.005, states[i+1].y + canvas.width * 0.005);
               ctx.stroke();
               ctx.closePath();
             }
