@@ -6,7 +6,6 @@
     <title>Corona</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css">
-    <link rel="icon" type="image/png" href="favicon/favicon1.png">
   </head>
   <body align="center">
     <nav>
@@ -185,7 +184,7 @@
         if (time <= 1000) {
           graph1Context.beginPath();
           graph1Context.fillStyle="#000000";
-          graph1Context.arc(time * graph1Canvas.width / 1000, graph1Canvas.height * (n - numColored()) / n  , 1, 0, 2*Math.PI, true);
+          graph1Context.arc(time * graph1Canvas.width / 1000, graph1Canvas.height * (n - numColored()) / n, 1, 0, 2*Math.PI, true);
           graph1Context.closePath();
           graph1Context.fill();
 

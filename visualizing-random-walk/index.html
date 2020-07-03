@@ -6,7 +6,6 @@
     <title>Visualizing Random Walk</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css">
-    <link rel="icon" type="image/png" href="../favicon/favicon1.png">
   </head>
   <body align="center">
     <nav>
@@ -29,7 +28,6 @@
       </p>
       <canvas id="randomWalk" width=1000, height=150></canvas>
       <img id="dollars" src="dollar bills 5.png" alt="dollars" width=500, style="display:block;max-width:100%;height:auto;margin:auto auto"></img>
-      <p id="result">
       <script>
 
         var canvas = document.getElementById("randomWalk");
@@ -43,12 +41,11 @@
 
         var padding = canvas.width * 0.05;
         var radius = Math.min((canvas.width - 2 * padding - (n - 1) * canvas.width * 0.06) / 10, 20);
-        canvas.height = 2 * radius + padding;
         var activeStateColor = "red";
         var inactiveStateColor = "#0095DD";
         var intervalId;
         for (i = 0; i < n; i++) {
-          states[i] = { x: (canvas.width - 2 * padding) * i / (n-1) + padding, y: canvas.height / 2, active: false};
+          states[i] = { x: (canvas.width - 2 * padding) * i / (n-1) + padding, y: canvas.height / 2 - 20, active: false};
         }
 
         function drawStates() {
@@ -103,11 +100,14 @@
               m--;
             }
           } else {
-            var res = document.getElementById("result");
             if (m == 0) {
-              res.innerHTML = "You are now broke.";
+              ctx.font = "16px Arial";
+              ctx.fillStyle = "black";
+              ctx.fillText("You are now broke.", canvas.width / 2, canvas.height - 20);
             } else if (m == n - 1) {
-              res.innerHTML = "You doubled your money!";
+              ctx.font = "16px Arial";
+              ctx.fillStyle = "black";
+              ctx.fillText("You doubled your money!", canvas.width / 2, canvas.height - 20);
             }
             clearInterval(intervalId);
           }
