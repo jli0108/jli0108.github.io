@@ -219,6 +219,7 @@
     document.getElementById("print").addEventListener("click", printBoard);
 
     function getResults() {
+      setDimensions();
       var trials = document.getElementById("trials").value;
       var maxPossibleCombos = Math.floor(maxRows * maxCols / 2);
       var combos = new Array(maxPossibleCombos + 1);
