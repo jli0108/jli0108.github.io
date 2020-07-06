@@ -32,12 +32,12 @@
       <button id="print">Generate new board</button>
     </div>
     <div>
-      Number of trials: <input id="trialInput" type="number" value="10000">
+      Number of trials: <input id="trials" type="number" value="10000">
       <button id="getResults">Compute average number of combos</button><br>
       <p id="results"></p>
     </div>
     <div>
-      Check out the 2-match version <a href=two-match.html>here</a>!
+      The traditional three-match simulation can be found <a href="../pazudora-simulation/">here</a>!
     </div>
     <script>
 
@@ -169,20 +169,20 @@
       var comboCount = 0;
       function checkMatches(i, j) {
         /* checks if orb at position i,j is part of a 3-match; if so, labels it as matched = true and does the same for other orbs within the same match*/
-        for (var k = 0; k < 3; k++) {
-          if ((i - k >= 0) && (i - k + 2 < maxRows) && board[i - k][j].color == board[i - k + 1][j].color && board[i - k + 1][j].color == board[i - k + 2][j].color) {
-            if (!board[i - k + 2][j].matched && !board[i - k + 1][j].matched && !board[i - k][j].matched
-            && !adjacentMatch(i - k + 2, j) && !adjacentMatch(i - k + 1, j) && !adjacentMatch(i - k, j)) {
+        for (var k = 0; k < 2; k++) {
+          if ((i - k >= 0) && (i - k + 1 < maxRows) && board[i - k][j].color == board[i - k + 1][j].color) {
+            if (!board[i - k + 1][j].matched && !board[i - k][j].matched
+            && !adjacentMatch(i - k + 1, j) && !adjacentMatch(i - k, j)) {
               comboCount++;
             }
-            board[i - k + 2][j].matched = board[i - k + 1][j].matched = board[i - k][j].matched = true;
+            board[i - k + 1][j].matched = board[i - k][j].matched = true;
           }
-          if ((j - k >= 0) && (j - k + 2 < maxCols) && board[i][j - k].color == board[i][j - k + 1].color && board[i][j - k + 1].color == board[i][j - k + 2].color) {
-            if (!board[i][j - k + 2].matched && !board[i][j - k + 1].matched && !board[i][j - k].matched
-            && !adjacentMatch(i, j - k + 2) && !adjacentMatch(i, j - k + 1) && !adjacentMatch(i, j - k)) {
+          if ((j - k >= 0) && (j - k + 1 < maxCols) && board[i][j - k].color == board[i][j - k + 1].color) {
+            if (!board[i][j - k + 1].matched && !board[i][j - k].matched
+            && !adjacentMatch(i, j - k + 1) && !adjacentMatch(i, j - k)) {
               comboCount++;
             }
-            board[i][j - k + 2].matched = board[i][j - k + 1].matched = board[i][j - k].matched = true;
+            board[i][j - k + 1].matched = board[i][j - k].matched = true;
           }
         }
         board[i][j].checkedMatches = true;
@@ -219,8 +219,8 @@
     document.getElementById("print").addEventListener("click", printBoard);
 
     function getResults() {
-      var trials = document.getElementById("trialInput").value;
-      var maxPossibleCombos = Math.floor(maxRows * maxCols / 3);
+      var trials = document.getElementById("trials").value;
+      var maxPossibleCombos = Math.floor(maxRows * maxCols / 2);
       var combos = new Array(maxPossibleCombos + 1);
       combos.fill(0);
       var result = "";
@@ -247,7 +247,6 @@
         document.getElementById("results").innerHTML = "Unexpected input";
       }
     }
-
     document.getElementById("getResults").addEventListener("click", getResults);
 
     function setDimensions() {
