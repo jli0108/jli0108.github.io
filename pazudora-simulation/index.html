@@ -37,7 +37,12 @@
       <p id="results"></p>
     </div>
     <div>
-      Check out the 2-match version <a href=two-match.html>here</a>!
+      Check out the 2-match version <a href=two-match.html>here</a>!<br><br>
+      <b>Notes</b>:<br>
+      <ul style="text-align:left;display:inline-block;">
+        <li>Don't make board size too big.</li>
+        <li>Don't do too many trials</li>
+      </ul>
     </div>
     <script>
 
@@ -219,6 +224,7 @@
     document.getElementById("print").addEventListener("click", printBoard);
 
     function getResults() {
+      setDimensions();
       var trials = document.getElementById("trialInput").value;
       var maxPossibleCombos = Math.floor(maxRows * maxCols / 3);
       var combos = new Array(maxPossibleCombos + 1);
