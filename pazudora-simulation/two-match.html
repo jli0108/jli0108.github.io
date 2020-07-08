@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
     <meta charset="utf-8">
-    <title>Pazudora simulation</title>
+    <title>Pazudora simulation (two-match)</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css">
   </head>
@@ -24,8 +24,8 @@
   <script src="../nav.js"></script>
     <div align=center>
       <h1>Board</h1>
-      Number of columns: <input id="colInput" type="number" value="6"><br>
       Number of rows: <input id="rowInput" type="number" value="5"><br>
+      Number of columns: <input id="colInput" type="number" value="6"><br>
       <canvas id="board" width=300 height=250></canvas>
       <p id="debug"></p>
       <p id="combos"></p>
@@ -49,8 +49,8 @@
       }
     }
 
-    var maxCols = 6;
     var maxRows = 5;
+    var maxCols = 6;
     var numColors = 6;
     var board;
 

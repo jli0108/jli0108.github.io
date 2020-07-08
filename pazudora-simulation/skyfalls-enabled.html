@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
     <meta charset="utf-8">
-    <title>Pazudora simulation</title>
+    <title>Pazudora simulation (two-match, skyfalls enabled)</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css">
   </head>
@@ -25,26 +25,19 @@
     <div align=center>
       <h1>Board</h1>
       Number of rows: <input id="rowInput" type="number" value="5"><br>
-      Number of columns: <input id="colInput" type="number" value="6"><br><br>
-      <input id="print" type="image" src="new-board.png" width="200"/><br>
-      <img alt="chibi 1" src="chibi1.png" height="250">
+      Number of columns: <input id="colInput" type="number" value="6"><br>
       <canvas id="board" width=300 height=250></canvas>
-      <img alt="chibi 2" src="chibi2.png" height="250"><br>
       <p id="debug"></p>
       <p id="combos"></p>
+      <button id="print">Generate new board</button>
     </div>
     <div>
-      Number of trials: <input id="trialInput" type="number" value="10000">
+      Number of trials: <input id="trials" type="number" value="10000">
       <button id="getResults">Compute average number of combos</button><br>
       <p id="results"></p>
     </div>
     <div>
-      Check out the 2-match version <a href=two-match.html>here</a>!<br><br>
-      <b>Notes</b>:<br>
-      <ul style="text-align:left;display:inline-block;">
-        <li>Don't make board size too big.</li>
-        <li>Don't do too many trials</li>
-      </ul>
+      The traditional three-match simulation can be found <a href="../pazudora-simulation/">here</a>!
     </div>
     <script>
 
@@ -176,20 +169,20 @@
       var comboCount = 0;
       function checkMatches(i, j) {
         /* checks if orb at position i,j is part of a 3-match; if so, labels it as matched = true and does the same for other orbs within the same match*/
-        for (var k = 0; k < 3; k++) {
-          if ((i - k >= 0) && (i - k + 2 < maxRows) && board[i - k][j].color == board[i - k + 1][j].color && board[i - k + 1][j].color == board[i - k + 2][j].color) {
-            if (!board[i - k + 2][j].matched && !board[i - k + 1][j].matched && !board[i - k][j].matched
-            && !adjacentMatch(i - k + 2, j) && !adjacentMatch(i - k + 1, j) && !adjacentMatch(i - k, j)) {
+        for (var k = 0; k < 2; k++) {
+          if ((i - k >= 0) && (i - k + 1 < maxRows) && board[i - k][j].color == board[i - k + 1][j].color) {
+            if (!board[i - k + 1][j].matched && !board[i - k][j].matched
+            && !adjacentMatch(i - k + 1, j) && !adjacentMatch(i - k, j)) {
               comboCount++;
             }
-            board[i - k + 2][j].matched = board[i - k + 1][j].matched = board[i - k][j].matched = true;
+            board[i - k + 1][j].matched = board[i - k][j].matched = true;
           }
-          if ((j - k >= 0) && (j - k + 2 < maxCols) && board[i][j - k].color == board[i][j - k + 1].color && board[i][j - k + 1].color == board[i][j - k + 2].color) {
-            if (!board[i][j - k + 2].matched && !board[i][j - k + 1].matched && !board[i][j - k].matched
-            && !adjacentMatch(i, j - k + 2) && !adjacentMatch(i, j - k + 1) && !adjacentMatch(i, j - k)) {
+          if ((j - k >= 0) && (j - k + 1 < maxCols) && board[i][j - k].color == board[i][j - k + 1].color) {
+            if (!board[i][j - k + 1].matched && !board[i][j - k].matched
+            && !adjacentMatch(i, j - k + 1) && !adjacentMatch(i, j - k)) {
               comboCount++;
             }
-            board[i][j - k + 2].matched = board[i][j - k + 1].matched = board[i][j - k].matched = true;
+            board[i][j - k + 1].matched = board[i][j - k].matched = true;
           }
         }
         board[i][j].checkedMatches = true;
@@ -227,8 +220,8 @@
 
     function getResults() {
       setDimensions();
-      var trials = document.getElementById("trialInput").value;
-      var maxPossibleCombos = Math.floor(maxRows * maxCols / 3);
+      var trials = document.getElementById("trials").value;
+      var maxPossibleCombos = Math.floor(maxRows * maxCols / 2);
       var combos = new Array(maxPossibleCombos + 1);
       combos.fill(0);
       var result = "";
@@ -255,7 +248,6 @@
         document.getElementById("results").innerHTML = "Unexpected input";
       }
     }
-
     document.getElementById("getResults").addEventListener("click", getResults);
 
     function setDimensions() {
