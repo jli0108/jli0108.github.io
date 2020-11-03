@@ -25,7 +25,7 @@
       <h1>Board</h1>
       Number of rows: <input id="rowInput" type="number" value="5"><br>
       Number of columns: <input id="colInput" type="number" value="6"><br><br>
-      <input id="print" type="image" src="new-board.png" width="200"/><br>
+      <button id="generateNewBoard">Generate new board</button><br>
 
       <canvas id="board" width=300 height=250></canvas><br>
       <p id="debug"></p>
@@ -223,7 +223,7 @@
       }
       return comboCount;
     }
-    document.getElementById("print").addEventListener("click", printBoard);
+    document.getElementById("generateNewBoard").addEventListener("click", printBoard);
 
     function getResults() {
       setDimensions();
