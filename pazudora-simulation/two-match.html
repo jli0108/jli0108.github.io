@@ -166,6 +166,12 @@
     */
     function countCombos() {
       var comboCount = 0;
+      for (var i = 0; i < maxRows; i++) {
+        for (var j = 0; j < maxCols; j++) {
+          board[i][j].matched = false;
+          board[i][j].checkedMatches = false;
+        }
+      }
       function checkMatches(i, j) {
         /* checks if orb at position i,j is part of a 3-match; if so, labels it as matched = true and does the same for other orbs within the same match*/
         for (var k = 0; k < 2; k++) {
