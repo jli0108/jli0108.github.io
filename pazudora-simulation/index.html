@@ -1,50 +1,65 @@
 <!DOCTYPE html>
 <html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
     <meta charset="utf-8">
-    <title>Pazudora simulation</title>
+    <title>Pazudora simulation (two-match)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css">
     <link rel="icon" href="../favicon.ico">
   </head>
   <body align="center">
-  <nav>
-    <ul class="navList">
-      <li><a href="..">Home</a></li>
-      <li><a href="../resume.pdf">Resume</a></li>
-    </ul>
-    <div class="overlayMenuButton">
-      <div class="line1"></div>
-      <div class="line2"></div>
-      <div class="line3"></div>
+    <nav class="nav nav-pills navbar-expand-sm navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-nav collapse navbar-collapse">
+        <a class="nav-link" href="..">Home</a>
+        <a class="nav-link" href="resume.pdf">Resume</a>
+      </div>
+    </nav>
+    <div class="container p-3 mx-auto">
+      <h1 class="text-center">Board</h1>
+      <div class="input-group-row">
+        <div class="input-group-prepend">
+          <span class="input-group-text col-3">Number of rows:</span>
+          <input class="form-control" id="rowInput" type="number" value="5">
+        </div>
+      </div>
+      <div class="input-group-row">
+        <div class="input-group-prepend">
+          <span class="input-group-text col-3">Number of columns:</span>
+          <input class="form-control" id="colInput" type="number" value="6">
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="m-2" id="generateNewBoard">Generate new board</button><br>
+        <canvas class="m-2" id="board" width=300 height=250></canvas><br>
+        <p class="m-2" id="debug"></p>
+        <p class="m-2" id="combos"></p>
+      </div>
     </div>
-  </nav>
-  <script src="../nav.js"></script>
-    <div align=center>
-      <h1>Board</h1>
-      Number of rows: <input id="rowInput" type="number" value="5"><br>
-      Number of columns: <input id="colInput" type="number" value="6"><br><br>
-      <button id="generateNewBoard">Generate new board</button><br>
-
-      <canvas id="board" width=300 height=250></canvas><br>
-      <p id="debug"></p>
-      <p id="combos"></p>
+    <div class="container p-3 mx-auto">
+      <div class="input-group-row">
+        <div class="input-group-prepend">
+          <span class="input-group-text col-3">Number of trials:</span>
+          <input class="form-control col-3" id="trialInput" type="number" value="10000">
+          <button class="col-5" id="getResults">Compute average number of combos</button><br>
+        </div>
+      </div>
+      <p class="text-left" id="results"></p>
     </div>
-    <div>
-      Number of trials: <input id="trialInput" type="number" value="10000">
-      <button id="getResults">Compute average number of combos</button><br>
-      <p id="results"></p>
-    </div>
-    <div>
+    <div class="container p-3 mx-auto">
       Check out the 2-match version <a href="two-match.html">here</a>!<br>
       Check out 2-match skyfall version <a href="skyfalls-enabled.html">here</a>!
     </div>
-    <div>
+    <div class="container p-3 mx-auto">
       <b>Notes</b>:<br>
       <ul style="text-align:left;display:inline-block;">
         <li>Don't make board size too big.</li>
-        <li>Don't do too many trials</li>
+        <li>Don't do too many trials.</li>
       </ul>
     </div>
     <script>
@@ -80,21 +95,21 @@
       setDimensions();
       resetBoard();
       document.getElementById("combos").innerHTML = "Combos: " + countCombos();
-      var debug = document.getElementById("debug");
-      var canvas = document.getElementById("board");
-      var ctx = canvas.getContext("2d");
-      var images = new Array(maxRows);
-      for (var i = 0; i < maxRows; i++) {
+      let debug = document.getElementById("debug");
+      let canvas = document.getElementById("board");
+      let ctx = canvas.getContext("2d");
+      let images = new Array(maxRows);
+      for (let i = 0; i < maxRows; i++) {
         images[i] = new Array(maxCols);
       }
-      for (var i = 0; i < maxRows; i++) {
-        for (var j = 0; j < maxCols; j++) {
+      for (let i = 0; i < maxRows; i++) {
+        for (let j = 0; j < maxCols; j++) {
           images[i][j] = new Image();
         }
       }
       debug.innerHTML = "";
-      for (var i = 0; i < maxRows; i++) {
-        for (var j = 0; j < maxCols; j++) {
+      for (let i = 0; i < maxRows; i++) {
+        for (let j = 0; j < maxCols; j++) {
           switch (board[i][j].color) {
             case (0):
               debug.append("H");
@@ -137,46 +152,10 @@
             return true;
       }
     }
-    /*
-    BUGGED! DO NOT USE
-    IT OVERCOUNTS IN CERTAIN CASES!!!
-    function countCombos() {
-
-      var comboCount = 0;
-      for (var i = 0; i < maxRows; i++) {
-        for (var j = 0; j < maxCols - 2; j++) {
-          if (board[i][j].color == board[i][j + 1].color && board[i][j + 1].color == board[i][j + 2].color) {
-            if (!board[i][j].matched && !board[i][j + 1].matched && !board[i][j + 2].matched
-            && !adjacentMatch(i, j) && !adjacentMatch(i, j + 1) && !adjacentMatch(i, j + 2)) {
-              comboCount++;
-            }
-            board[i][j].matched = board[i][j + 1].matched = board[i][j + 2].matched = true;
-          }
-        }
-      }
-      for (var j = 0; j < maxCols; j++) {
-        for (var i = 0; i < maxRows - 2; i++) {
-          if (board[i][j].color == board[i + 1][j].color && board[i + 1][j].color == board[i + 2][j].color) {
-            if (!board[i][j].matched && !board[i + 1][j].matched && !board[i + 2][j].matched
-            && !adjacentMatch(i, j) && !adjacentMatch(i + 1, j) && !adjacentMatch(i + 2, j)) {
-              comboCount++;
-            }
-            board[i][j].matched = board[i + 1][j].matched = board[i + 2][j].matched = true;
-          }
-        }
-      }
-      for (var i = 0; i < maxRows; i++) {
-        for (var j = 0; j < maxCols; j++) {
-          board[i][j].matched = false;
-        }
-      }
-      return comboCount;
-    }
-    */
     function countCombos() {
       var comboCount = 0;
-      for (var i = 0; i < maxRows; i++) {
-        for (var j = 0; j < maxCols; j++) {
+      for (let i = 0; i < maxRows; i++) {
+        for (let j = 0; j < maxCols; j++) {
           board[i][j].matched = false;
           board[i][j].checkedMatches = false;
         }

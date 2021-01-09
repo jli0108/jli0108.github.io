@@ -4,23 +4,39 @@
   <head>
     <meta charset="utf-8">
     <title>Particle simulation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css">
   </head>
-  <nav>
-    <ul class="navList">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="resume.pdf">Resume</a></li>
-    </ul>
-    <div class="overlayMenuButton">
-      <div class="line1"></div>
-      <div class="line2"></div>
-      <div class="line3"></div>
+  <nav class="nav nav-pills navbar-expand-sm navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-nav collapse navbar-collapse">
+      <a class="nav-link" href=".">Home</a>
+      <a class="nav-link" href="resume.pdf">Resume</a>
     </div>
   </nav>
-  <script src="nav.js"></script>
-    <div align="center">
-      <script>
+    <br><br>
+    <div class="container p-3 mx-auto">
+      <canvas id="simulation" width="1100" height="700"></canvas><br />
+      <div class="btn-group" role="group">
+        <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
+        <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
+        <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button><br />
+      </div>
+      <p>
+        Note: This assumes perfectly elastic collisions and particles are same mass.<br>
+        I don't know why but I made the colored particles cause other particles to become colored on collision.<br>
+        We also assume no other intermolecular interactions.
+      </p>
+    </div>
+    <div class="container p-3 mx-auto">
+      <h1>Number of Colored Particles Tracker</h1>
+      <canvas id="graph" width="1000" height="400">Time</canvas>
+    </div>
+    <script>
       class Particle {
         constructor(x, y, dx, dy, colored) {
           this.x = x;
@@ -31,12 +47,24 @@
         }
       }
 
-      var n = 300;
-      var r = 3;
-      var particles = new Array(n);
-      var intervalId, time;
-      var canvas, context, graphCanvas, graphContext;
+      let n = 300;
+      let r = 3;
+      let particles = new Array(n);
+      let intervalId, time;
+      let canvas, context, graphCanvas, graphContext;
+      canvas = document.getElementById("simulation");
+      fitToContainer(canvas);
+      graphCanvas = document.getElementById("graph");
+      fitToContainer(graphCanvas);
 
+      function fitToContainer(canvas){
+        // Make it visually fill the positioned parent
+        canvas.style.width ='100%';
+        canvas.style.height='60%';
+        // ...then set the internal size to match
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
       function startSimulation() {
         document.getElementById("start").disabled = true;
         document.getElementById("cont").disabled = true;
@@ -156,19 +184,6 @@
         document.getElementById("cont").disabled = false;
         document.getElementById("stop").disabled = true;
       }
-
       </script>
-      <canvas id="simulation" width="1200" height="700"></canvas><br />
-      <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
-      <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
-      <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button><br />
-      <p>Note: This assumes perfectly elastic collisions and particles are same mass.</p>
-      <p>I don't know why but I made the colored particles cause other particles to become colored on collision.</p>
-      <p>We also assume no other intermolecular interactions.</p>
-    </div>
-    <div>
-      <h1>Number of Colored Particles Tracker</h1>
-      <canvas id="graph" width="1000" height="400">Time</canvas>
-    </div>
   </body>
 </html>
