@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
     <title>Pazudora simulation (two-match, skyfalls enabled)</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css">
     <link rel="icon" href="../favicon.ico">
   </head>
-  <body align="center">
-    <nav class="nav nav-pills navbar-expand-sm navbar-dark bg-dark">
+  <body>
+    <nav class="navbar nav-pills navbar-expand-sm navbar-dark bg-dark">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-nav collapse navbar-collapse">
+      <div class="navbar-nav collapse navbar-collapse" id="navbarNavAltMarkup">
         <a class="nav-link" href="..">Home</a>
         <a class="nav-link" href="resume.pdf">Resume</a>
       </div>
@@ -22,17 +22,17 @@
     <br>
     <div class="container p-3 mx-auto">
       <h1 class="text-center">Board</h1>
-      <div class="input-group-row">
+      <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text col-3">Number of rows:</span>
-          <input class="form-control" id="rowInput" type="number" value="2">
+          <span class="input-group-text" id="row-input-text">Number of rows:</span>
         </div>
+        <input class="form-control" id="rowInput" type="number" value="2" aria-describedby="row-input-text">
       </div>
-      <div class="input-group-row">
+      <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text col-3">Number of columns:</span>
-          <input class="form-control" id="colInput" type="number" value="2">
+          <span class="input-group-text" id="col-input-text">Number of columns:</span>
         </div>
+        <input class="form-control" id="colInput" type="number" value="2" aria-describedby="col-input-text">
       </div>
       <br>
       <div class="text-center">
@@ -43,12 +43,14 @@
       </div>
     </div>
     <div class="container p-3 mx-auto">
-      <div class="input-group-row">
+      <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text col-3">Number of trials:</span>
-          <input class="form-control col-3" id="trials" type="number" value="10000">
-          <button class="col-5" id="getResults">Compute average number of combos</button><br>
+          <span class="input-group-text" id="trial-input-text">Number of trials:</span>
         </div>
+        <input class="form-control" id="trialInput" type="number" value="10000" aria-describedby="trial-input-text">
+      </div>
+      <div class="text-center">
+        <button class="col-5" id="getResults">Compute average number of combos</button><br>
       </div>
       <p class="text-left" id="results"></p>
     </div>

@@ -11,7 +11,7 @@
   </head>
   <body align="center">
     <!---->
-    <nav class="nav nav-pills navbar-expand-sm navbar-dark bg-dark">
+    <nav class="navbar nav-pills navbar-expand-sm navbar-dark bg-dark">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -23,17 +23,17 @@
     <br>
     <div class="container p-3 mx-auto">
       <h1 class="text-center">Board</h1>
-      <div class="input-group-row">
+      <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text col-3">Number of rows:</span>
-          <input class="form-control" id="rowInput" type="number" value="5">
+          <span class="input-group-text" id="row-input-text">Number of rows:</span>
         </div>
+        <input class="form-control" id="rowInput" type="number" value="5" aria-describedby="row-input-text">
       </div>
-      <div class="input-group-row">
+      <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text col-3">Number of columns:</span>
-          <input class="form-control" id="colInput" type="number" value="6">
+          <span class="input-group-text" id="col-input-text">Number of columns:</span>
         </div>
+        <input class="form-control" id="colInput" type="number" value="6" aria-describedby="col-input-text">
       </div>
       <br>
       <div class="text-center">
@@ -44,12 +44,14 @@
       </div>
     </div>
     <div class="container p-3 mx-auto">
-      <div class="input-group-row">
+      <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text col-3">Number of trials:</span>
-          <input class="form-control col-3" id="trialInput" type="number" value="10000">
-          <button class="col-5" id="getResults">Compute average number of combos</button><br>
+          <span class="input-group-text" id="trial-input-text">Number of trials:</span>
         </div>
+        <input class="form-control" id="trialInput" type="number" value="10000" aria-describedby="trial-input-text">
+      </div>
+      <div class="text-center">
+        <button class="col-5" id="getResults">Compute average number of combos</button><br>
       </div>
       <p class="text-left" id="results"></p>
     </div>
