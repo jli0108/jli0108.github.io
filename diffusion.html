@@ -17,16 +17,16 @@
     </div>
   </nav>
   <body>
-    <br><br>
-    <div class="container">
-      <canvas id="simulation" width="1200" height="700"></canvas><br />
-      <div class="btn-group" role="group">
-        <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
-        <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
-        <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button>
-      </div>
-      <p>Check out how the colored particles spread out!</p>
+  <br><br>
+  <div class="container text-center p-1">
+    <canvas id="simulation" width="1100" height="700"></canvas><br />
+    <div class="btn-group" role="group">
+      <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
+      <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
+      <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button>
     </div>
+    <p class="text-center">Check out how the colored particles spread out!</p>
+  </div>
     <script>
       class Particle {
         constructor(x, y, dx, dy, colored) {
@@ -38,11 +38,20 @@
         }
       }
 
-      var n = 300;
-      var r = 3;
-      var particles = new Array(n);
-      var intervalId;
-      var canvas, context;
+      let n = 300;
+      let r = 3;
+      let particles = new Array(n);
+      let intervalId;
+      let canvas, context;
+      canvas = document.getElementById("simulation");
+      fitToContainer(canvas);
+
+      function fitToContainer(canvas){
+        canvas.style.width ='100%';
+        canvas.style.height='60%';
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
       function startSimulation() {
         document.getElementById("start").disabled = true;
         document.getElementById("cont").disabled = true;
