@@ -47,27 +47,27 @@ class Orb {
         switch (board[i][j].color) {
           case (0):
             debug.append("H");
-            images[i][j].src = "orb-H.png";
+            images[i][j].src = "assets/orb-H.png";
             break;
           case (1):
             debug.append("R");
-            images[i][j].src = "orb-R.png";
+            images[i][j].src = "assets/orb-R.png";
             break;
           case (2):
             debug.append("B");
-            images[i][j].src = "orb-B.png";
+            images[i][j].src = "assets/orb-B.png";
             break;
           case (3):
             debug.append("G");
-            images[i][j].src = "orb-G.png";
+            images[i][j].src = "assets/orb-G.png";
             break;
           case (4):
             debug.append("L");
-            images[i][j].src = "orb-L.png";
+            images[i][j].src = "assets/orb-L.png";
             break;
           case (5):
             debug.append("D");
-            images[i][j].src = "orb-D.png";
+            images[i][j].src = "assets/orb-D.png";
             break;
         }
         ctx.drawImage(images[i][j], j*50, i*50, 50, 50);
