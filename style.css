@@ -1,7 +1,11 @@
+@font-face {
+  font-family: "Noto Serif JP";
+  src: url(Noto_Serif_JP/NotoSerifJP-Medium.otf);
+}
 body {
-    font-family: "Computer Modern Serif", sans-serif;
+    font-family: "Noto Serif JP", "Computer Modern Serif", sans-serif;
     font-size: 18px;
-    background-color: slategray;
+    background-color: slategray;  
 }
 .navbar-nav {
   margin-right: 10%;
