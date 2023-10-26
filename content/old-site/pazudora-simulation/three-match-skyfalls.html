@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pazudora simulation (three-match, skyfalls enabled)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../Computer Modern/Serif/cmun-serif.css">
+    <link rel="icon" href="../favicon.ico">
+  </head>
+  <body>
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="..">Home</a>
+            <a class="nav-link" href="../resume.pdf">Resume</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <br><br>
+    <div class="container p-3 mx-auto">
+      <h1 class="text-center">Board</h1>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="row-input-text">Number of rows:</span>
+        </div>
+        <input class="form-control" id="rowInput" type="number" value="5" aria-describedby="row-input-text">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="col-input-text">Number of columns:</span>
+        </div>
+        <input class="form-control" id="colInput" type="number" value="6" aria-describedby="col-input-text">
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="m-2" id="generateNewBoard">Generate new board</button><br>
+        <canvas class="m-2" id="board" width=300 height=250></canvas><br>
+        <p class="m-2" id="debug"></p>
+        <p class="m-2" id="combos"></p>
+      </div>
+    </div>
+    <div class="container p-3 mx-auto">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="trial-input-text">Number of trials:</span>
+        </div>
+        <input class="form-control" id="trialInput" type="number" value="10000" aria-describedby="trial-input-text">
+      </div>
+      <div class="text-center">
+        <button class="col-5" id="getResults">Compute average number of combos</button><br>
+      </div>
+      <p class="text-left" id="results"></p>
+    </div>
+    <div class="container p-3 mx-auto">
+      The traditional three-match simulation can be found <a href="../pazudora-simulation/">here</a>!<br>
+      The traditional three-match simulation with skyfalls can be found <a href="three-match-skyfalls.html">here</a>!<br>
+      The two-match simulation without skyfalls can be found <a href="two-match.html">here</a>!
+    </div>
+    <script src="scripts/three-match-skyfalls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  </body>
+</html>

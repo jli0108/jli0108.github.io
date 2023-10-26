@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Diffusion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css">
+  </head>
+  <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="..">Home</a>
+          <a class="nav-link" href="../resume.pdf">Resume</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <body>
+  <br><br>
+  <div class="container text-center p-1">
+    <canvas id="simulation" width="1100" height="700"></canvas><br />
+    <div class="btn-group" role="group">
+      <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
+      <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
+      <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button>
+    </div>
+    <p class="text-center">Check out how the colored particles spread out!</p>
+  </div>
+    <script>
+      class Particle {
+        constructor(x, y, dx, dy, colored) {
+          this.x = x;
+          this.y = y;
+          this.dx = dx;
+          this.dy = dy;
+          this.colored = colored;
+        }
+      }
+
+      let n = 300;
+      let r = 3;
+      let particles = new Array(n);
+      let intervalId;
+      let canvas, context;
+      canvas = document.getElementById("simulation");
+      fitToContainer(canvas);
+
+      function fitToContainer(canvas){
+        canvas.style.width ='100%';
+        canvas.style.height='60%';
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      function startSimulation() {
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+
+        canvas = document.getElementById("simulation");
+        context = canvas.getContext("2d");
+
+        for (i = 1; i <= n; i++) {
+          particles[i] = new Particle(canvas.width * Math.random(), canvas.height * Math.random(), 5 * Math.random() - 2.5, 5 * Math.random() - 2.5, null);
+          if (particles[i].x < canvas.width/4 && particles[i].y < canvas.height/4) {
+            particles[i].colored = true;
+          } else {
+            particles[i].colored = false;
+          }
+        }
+
+        context = simulation.getContext('2d');
+        draw();
+      }
+
+      function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawParticles();
+        checkCollisions();
+        intervalId = requestAnimationFrame(draw);
+      }
+
+      function drawParticles() {
+
+        for (i = 1; i <= n; i++) {
+          context.beginPath();
+          if (particles[i].colored) {
+            context.fillStyle="#FF0000"; // red
+          } else {
+            context.fillStyle="#000000"; // black
+          }
+          // Draws particles
+          context.arc(particles[i].x, particles[i].y, r, 0, 2*Math.PI, true);
+          context.closePath();
+          context.fill();
+          particles[i].dx = (particles[i].x + particles[i].dx < r || particles[i].x > canvas.width - r) ? -particles[i].dx : particles[i].dx;
+          particles[i].dy = (particles[i].y + particles[i].dy < r || particles[i].y > canvas.height - r) ? -particles[i].dy : particles[i].dy;
+          particles[i].x += particles[i].dx;
+          particles[i].y += particles[i].dy;
+        }
+      }
+
+
+      function checkCollisions() {
+        for (i = 1; i < n; i++) {
+          for (j = i + 1; j <= n; j++) {
+            if (distance(i, j) < 2*r) {
+              /* exchange velocities */
+              [particles[i].dx, particles[j].dx] = [particles[j].dx, particles[i].dx];
+              [particles[i].dy, particles[j].dy] = [particles[j].dy, particles[i].dy];
+            }
+          }
+        }
+      }
+
+      function distance(i, j) {
+        return Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
+      }
+
+      function continueSimulation() {
+        draw();
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+      }
+      function stopSimulation() {
+        cancelAnimationFrame(intervalId);
+        document.getElementById("start").disabled = false;
+        document.getElementById("cont").disabled = false;
+        document.getElementById("stop").disabled = true;
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  </body>
+</html>

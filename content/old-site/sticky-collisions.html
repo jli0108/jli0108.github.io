@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <title>Sticky Collisions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css">
+  </head>
+  <body>
+    <nav>
+      <ul class="navList">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="resume.pdf">Resume</a></li>
+      </ul>
+      <div class="overlayMenuButton">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
+    <script src="nav.js"></script>
+    <div>
+      <script>
+      class Particle {
+        constructor(x, y, dx, dy, colored) {
+          this.x = x;
+          this.y = y;
+          this.dx = dx;
+          this.dy = dy;
+          this.colored = colored;
+        }
+      }
+
+      var n = 300;
+      var r = 3;
+      var particles = new Array(n);
+      var intervalId, time;
+      var canvas, context, graphCanvas, graphContext;
+
+      function startSimulation() {
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+
+        canvas = document.getElementById("simulation");
+        context = canvas.getContext("2d");
+
+        graphCanvas = document.getElementById("graph");
+        graphContext = graphCanvas.getContext("2d");
+
+        // Drawing axis lines
+        graphContext.beginPath();
+        graphContext.moveTo(200, 0);
+        graphContext.lineTo(200, 350);
+        graphContext.lineTo(1000, 350);
+        graphContext.stroke();
+        graphContext.closePath();
+
+        // Including axis titles
+        graphContext.font = "20px Arial";
+        graphContext.textBaseline = "bottom";
+        graphContext.fillText("Time", 600, 380);
+        graphContext.textBaseline = "middle";
+        graphContext.fillText("Number of Particles", 10, graphCanvas.height / 2);
+        time = 200;
+
+        for (i = 1; i <= n; i++) {
+          particles[i] = new Particle(canvas.width * Math.random(), canvas.height * Math.random(), 5 * Math.random() - 2.5, 5 * Math.random() - 2.5, false);
+        }
+        for (i = 1; i <= 1; i++) {
+          particles[i].colored = true;
+        }
+
+        draw();
+      }
+
+
+      function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawParticles();
+        checkCollisions();
+        plot();
+        intervalId = requestAnimationFrame(draw);
+      }
+
+      function drawParticles() {
+        for (i = 1; i <= n; i++) {
+          context.beginPath();
+          context.arc(particles[i].x, particles[i].y, r, 0, 2*Math.PI, true);
+          if (particles[i].colored) {
+            context.fillStyle="#0000CD"; // blue
+          } else {
+            context.fillStyle="#000000"; // black
+          }
+          context.fill();
+          context.closePath();
+          particles[i].dx = (particles[i].x + particles[i].dx < r || particles[i].x > canvas.width - r) ? -particles[i].dx : particles[i].dx;
+          particles[i].dy = (particles[i].y + particles[i].dy < r || particles[i].y > canvas.height - r) ? -particles[i].dy : particles[i].dy;
+          particles[i].x += particles[i].dx;
+          particles[i].y += particles[i].dy;
+        }
+      }
+
+      function checkCollisions() {
+        for (i = 1; i < n; i++) {
+          for (j = i + 1; j <= n; j++) {
+            if (distance(i, j) < 2*r) {
+              // inelastic collisions
+              particles[i].dx = particles[j].dx = (particles[i].dx + particles[j].dx) / 2;
+              particles[i].dy = particles[j].dy = (particles[i].dy + particles[j].dy) / 2;
+              if (particles[i].colored || particles[j].colored) {
+                particles[i].colored = particles[j].colored = true;
+              }
+            }
+          }
+        }
+      }
+
+      function distance(i, j) {
+        return Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
+      }
+
+      function numColored() {
+        var sum = 0;
+        for (i = 1; i <= n; i++) {
+          if (particles[i].colored) {
+            sum++;
+          }
+        }
+        return sum;
+      }
+
+      function plot() {
+        if (time <= graphCanvas.width) {
+          time += 0.5;
+          graphContext.beginPath();
+          graphContext.arc(time, 350 - numColored(), 1, 0, 2*Math.PI, true);
+          graphContext.fillStyle="#000000";
+          graphContext.fill();
+          graphContext.closePath();
+        }
+      }
+
+      function continueSimulation() {
+        draw();
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+      }
+
+      function stopSimulation() {
+        cancelAnimationFrame(intervalId);
+        document.getElementById("start").disabled = false;
+        document.getElementById("cont").disabled = false;
+        document.getElementById("stop").disabled = true;
+      }
+
+      </script>
+      <canvas id="simulation" width="1200" height="700"></canvas><br />
+      <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
+      <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
+      <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button><br />
+      <p>Note: This time the particles stick together when they collide (perfectly inelastic collisions)</p>
+      <p>Interestingly the particles tend to end up near the corners</p>
+    </div>
+    <div>
+      <h1>Number of Colored Particles Tracker</h1>
+      <canvas id="graph" width="1000" height="400">Time</canvas>
+    </div>
+  </body>
+</html>

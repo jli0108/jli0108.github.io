@@ -6,13 +6,13 @@
 
 /* Theme colors */
 :root {
-	--color-gray-20: #e0e0e0;
-	--color-gray-50: #C0C0C0;
+	--color-gray-20: #645858;
+	--color-gray-50: #302828;
 	--color-gray-90: #333;
 
-	--background-color: #fff;
+	--background-color: #f69e9e;
 
-	--text-color: var(--color-gray-90);
+	--text-color: #000000;
 	--text-color-link: #082840;
 	--text-color-link-active: #5f2b48;
 	--text-color-link-visited: #17050F;
@@ -22,16 +22,16 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--color-gray-20: #e0e0e0;
-		--color-gray-50: #C0C0C0;
-		--color-gray-90: #dad8d8;
+		--color-gray-20: #544040;
+		--color-gray-50: #614a4a;
+		--color-gray-90: #000000;
 
 		/* --text-color is assigned to --color-gray-_ above */
 		--text-color-link: #1493fb;
-		--text-color-link-active: #6969f7;
-		--text-color-link-visited: #a6a6f8;
+		--text-color-link-active: #04047d;
+		--text-color-link-visited: #0a0aaa;
 
-		--background-color: #15202b;
+		--background-color: #ffffff;
 	}
 }
 
@@ -53,7 +53,7 @@ html {
 	overflow-y: scroll;
 }
 body {
-	max-width: 40em;
+	max-width: 50em;
 }
 
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */

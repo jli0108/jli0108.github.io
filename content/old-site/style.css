@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "Noto Serif JP";
+  src: url(Noto_Serif_JP/NotoSerifJP-Medium.otf);
+}
+body {
+    font-family: "Noto Serif JP", "Computer Modern Serif", sans-serif;
+    font-size: 18px;
+    background-color: slategray;
+    padding-top: 78px;
+}
+a {
+  color: darkblue ;
+}
+.container {
+  background-color: lightsteelblue;
+  border-radius: .25rem;
+  margin-bottom: 1rem;
+}
+.overlayMenuButton {
+  padding: 0;
+  background-color: inherit;
+  margin: auto 0;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+}

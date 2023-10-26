@@ -1,6 +1,6 @@
 const { DateTime } = require("luxon");
 const markdownItAnchor = require("markdown-it-anchor");
-
+const katex = require("katex")
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginBundle = require("@11ty/eleventy-plugin-bundle");
@@ -77,6 +77,21 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addFilter("filterTagList", function filterTagList(tags) {
 		return (tags || []).filter(tag => ["all", "nav", "post", "posts"].indexOf(tag) === -1);
 	});
+
+	eleventyConfig.addFilter('latex', content=> {
+		return content
+		.replace(/\$\$(.+?)\$\$/g, (_, equation) => {
+		  const cleanEquation = equation.replace(/&lt;/g, '<')
+										.replace(/&gt;/g, '>')
+										.replace(/&amp;/g, '&')
+		  return katex.renderToString(cleanEquation, {displayMode: true, throwOnError: false, output: "mathml"})
+		})
+		.replace(/\$(.+?)\$/g, (_, equation) => {
+		  const cleanEquation = equation.replace(/&lt;/g, '<')
+										.replace(/&gt;/g, '>')
+		  return katex.renderToString(cleanEquation, {throwOnError: false, output: "mathml"})
+		})
+	  })
 
 	// Customize Markdown library settings:
 	eleventyConfig.amendLibrary("md", mdLib => {
