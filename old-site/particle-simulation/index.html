@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Particle simulation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css">
+  </head>
+  <body>
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="..">Home</a>
+            <a class="nav-link" href="../resume.pdf">Resume</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <br><br>
+    <div class="container text-center p-1">
+      <canvas id="simulation" width="1100" height="700"></canvas><br />
+      <div class="btn-group" role="group">
+        <button id="start" onclick="startSimulation();">Click here to start (restart)</button>
+        <button id="cont" onclick="continueSimulation();" disabled>Click here to continue</button>
+        <button id="stop" onclick="stopSimulation();" disabled>Click here to stop</button><br />
+      </div>
+      <p>
+        Note: This assumes perfectly elastic collisions and particles are same mass.<br>
+        I made the colored particles cause other particles to become colored on collision.<br>
+        We also assume no other intermolecular interactions.
+      </p>
+    </div>
+    <div class="container p-3 mx-auto text-center">
+      <h1>Number of Colored Particles</h1>
+      <canvas id="graph" width="1000" height="400">Time</canvas>
+    </div>
+    <script>
+      class Particle {
+        constructor(x, y, dx, dy, colored) {
+          this.x = x;
+          this.y = y;
+          this.dx = dx;
+          this.dy = dy;
+          this.colored = colored;
+        }
+      }
+
+      let n = 300;
+      let r = 3;
+      let particles = new Array(n);
+      let intervalId, time;
+      let canvas, context, graphCanvas, graphContext;
+      canvas = document.getElementById("simulation");
+      fitToContainer(canvas);
+      graphCanvas = document.getElementById("graph");
+      fitToContainer(graphCanvas);
+
+      function fitToContainer(canvas){
+        // Make it visually fill the positioned parent
+        canvas.style.width ='100%';
+        canvas.style.height='60%';
+        // ...then set the internal size to match
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      function startSimulation() {
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+
+        canvas = document.getElementById("simulation");
+        context = canvas.getContext("2d");
+
+        graphCanvas = document.getElementById("graph");
+        graphContext = graphCanvas.getContext("2d");
+
+        // Drawing axis lines
+        graphContext.beginPath();
+        graphContext.moveTo(200, 0);
+        graphContext.lineTo(200, 350);
+        graphContext.lineTo(1000, 350);
+        graphContext.stroke();
+        graphContext.closePath();
+
+        // Including axis titles
+        graphContext.font = "20px Arial";
+        graphContext.textBaseline = "bottom";
+        graphContext.fillText("Time", 600, 380);
+        graphContext.textBaseline = "middle";
+        graphContext.fillText("Number of Particles", 10, graphCanvas.height / 2);
+        time = 200;
+
+        for (i = 1; i <= n; i++) {
+          particles[i] = new Particle(canvas.width * Math.random(), canvas.height * Math.random(), 5 * Math.random() - 2.5, 5 * Math.random() - 2.5, false);
+        }
+        for (i = 1; i <= 1; i++) {
+          particles[i].colored = true;
+        }
+
+        draw();
+      }
+
+      function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawParticles();
+        checkCollisions();
+        plot();
+        intervalId = requestAnimationFrame(draw);
+      }
+
+      function drawParticles() {
+        for (i = 1; i <= n; i++) {
+          context.beginPath();
+          // Draws circles with specified radius at the coordinates on the canvas
+          context.arc(particles[i].x, particles[i].y, r, 0, 2*Math.PI, true);
+          if (particles[i].colored) {
+            context.fillStyle="#0000CD"; // blue
+          } else {
+            context.fillStyle="#000000"; // black
+          }
+          context.fill();
+          context.closePath();
+          particles[i].dx = (particles[i].x + particles[i].dx < r || particles[i].x > canvas.width - r) ? -particles[i].dx : particles[i].dx;
+          particles[i].dy = (particles[i].y + particles[i].dy < r || particles[i].y > canvas.height - r) ? -particles[i].dy : particles[i].dy;
+          particles[i].x += particles[i].dx;
+          particles[i].y += particles[i].dy;
+        }
+      }
+
+
+
+      function checkCollisions() {
+        for (i = 1; i < n; i++) {
+          for (j = i + 1; j <= n; j++) {
+            if (distance(i, j) < 2*r) {
+              /* exchange velocities */
+              [particles[i].dx, particles[j].dx] = [particles[j].dx, particles[i].dx];
+              [particles[i].dy, particles[j].dy] = [particles[j].dy, particles[i].dy];
+              if (particles[i].colored || particles[j].colored) {
+                particles[i].colored = particles[j].colored = true;
+              }
+            }
+          }
+        }
+      }
+
+      function distance(i, j) {
+        return Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
+      }
+
+      function numColored() {
+        var sum = 0;
+        for (i = 1; i <= n; i++) {
+          if (particles[i].colored) {
+            sum++;
+          }
+        }
+        return sum;
+      }
+
+      function plot() {
+        if (time <= graphCanvas.width) {
+          time += 0.5;
+          graphContext.beginPath();
+          graphContext.arc(time, 350 - numColored(), 1, 0, 2*Math.PI, true);
+          graphContext.fillStyle="#000000";
+          graphContext.fill();
+          graphContext.closePath();
+        }
+      }
+
+      function continueSimulation() {
+        draw();
+        document.getElementById("start").disabled = true;
+        document.getElementById("cont").disabled = true;
+        document.getElementById("stop").disabled = false;
+      }
+
+      function stopSimulation() {
+        cancelAnimationFrame(intervalId);
+        document.getElementById("start").disabled = false;
+        document.getElementById("cont").disabled = false;
+        document.getElementById("stop").disabled = true;
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  </body>
+</html>

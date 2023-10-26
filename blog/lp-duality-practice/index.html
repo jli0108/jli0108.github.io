@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>LP Duality Practice</title>
+		<meta name="description" content="Post about LP duality proofs.">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Joseph Li">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Joseph Li">
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+* { box-sizing: border-box; }
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #645858;
+	--color-gray-50: #302828;
+	--color-gray-90: #333;
+
+	--background-color: #f69e9e;
+
+	--text-color: #000000;
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #544040;
+		--color-gray-50: #614a4a;
+		--color-gray-90: #000000;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #04047d;
+		--text-color-link-visited: #0a0aaa;
+
+		--background-color: #ffffff;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 50em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	list-style: none;
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em .5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+	margin-right: 2em;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+a[href].header-anchor:focus,
+:hover > a[href].header-anchor {
+	color: #aaa;
+}
+
+h2 + .header-anchor {
+	font-size: 1.5em;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Joseph Li</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About Me</a></li>
+					<li class="nav-item"><a href="/resume/">Resume</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			
+<h1>LP Duality Practice</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2021-11-24">24 November 2021</time></li>
+	<li><a href="/tags/linear-programming/" class="post-tag">linear programming</a></li>
+</ul>
+
+<p>To prepare for my linear programming midterm, I looked at these problems from Bertsismas and Tsitsiklas' <em>Introduction to Linear Optimization</em>.</p>
+<h2 id="problem-4-27" tabindex="-1">Problem 4.27 <a class="header-anchor" href="#problem-4-27">#</a></h2>
+<p>For a given matrix <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">A</mi></mrow><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math></span>, show that the following are equivalent:
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>(a)</mtext></mrow><annotation encoding="application/x-tex">\text{(a)}</annotation></semantics></math></span> Every vector <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi></mrow><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span> such that <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{A}\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span> and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span> must satisfy <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_1=0</annotation></semantics></math></span>.
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>(b)</mtext></mrow><annotation encoding="application/x-tex">\text{(b)}</annotation></semantics></math></span> There exists some <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">p</mi></mrow><annotation encoding="application/x-tex">\mathbf{p}</annotation></semantics></math></span> such that <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold">A</mi><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="bold">p</mi><mo>≤</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{A}^\top \mathbf{p} \leq \mathbf{0}</annotation></semantics></math></span>, <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">p</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{p}\geq\mathbf{0}</annotation></semantics></math></span>, and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="bold">A</mi><mn>1</mn><mi mathvariant="normal">⊤</mi></msubsup><mi mathvariant="bold">p</mi><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mathbf{A}_1^\top\mathbf{p}&lt;0</annotation></semantics></math></span> where <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="bold">A</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{A}_1</annotation></semantics></math></span> is the first column of <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">A</mi></mrow><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math></span>.</p>
+<h3 id="solution" tabindex="-1">Solution <a class="header-anchor" href="#solution">#</a></h3>
+<p>Consider the following primal-dual LP pair:
+(Dual)
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>Minimize</mtext><mspace width="2em"/><mspace width="2em"/></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msup><mn mathvariant="bold">0</mn><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="bold">p</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>subject to</mtext><mspace width="2em"/><msubsup><mi mathvariant="bold">A</mi><mn>1</mn><mi mathvariant="normal">⊤</mi></msubsup><mi mathvariant="bold">p</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≤</mo><mo>−</mo><mn>1</mn><mo>&lt;</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><msubsup><mi mathvariant="bold">A</mi><mi>i</mi><mi mathvariant="normal">⊤</mi></msubsup><mi mathvariant="bold">p</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≤</mo><mn mathvariant="bold">0</mn><mspace width="2em"/><mi mathvariant="normal">∀</mi><mi>i</mi><mo mathvariant="normal">≠</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi mathvariant="bold">p</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≥</mo><mn>0</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*} \text{Minimize}\qquad\qquad &amp;\mathbf{0}^\top \mathbf{p} \newline \text{subject to}\qquad \mathbf{A}_1^\top \mathbf{p} &amp;\leq -1 &lt; 0 \newline \mathbf{A}_i^\top \mathbf{p} &amp;\leq \mathbf{0}\qquad \forall i \neq 1 \newline \mathbf{p} &amp;\geq 0\end{align*}</annotation></semantics></math></span>
+(Primal)
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>Maximize</mtext><mspace width="2em"/><mspace width="2em"/></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>−</mo><msub><mi>y</mi><mn>1</mn></msub></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>subject to</mtext><mspace width="2em"/><mi mathvariant="bold">A</mi><mi mathvariant="bold">y</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≤</mo><mn mathvariant="bold">0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi mathvariant="bold">y</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≤</mo><mn mathvariant="bold">0</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*} \text{Maximize}\qquad\qquad &amp;-y_1 \newline \text{subject to}\qquad \mathbf{A}\mathbf{y} &amp;\leq \mathbf{0} \newline \mathbf{y} &amp;\leq \mathbf{0}\end{align*}</annotation></semantics></math></span></p>
+<h4 id="b-text-is-true-implies-a-text-is-true" tabindex="-1"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo><mtext> is true</mtext><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mtext> is true</mtext></mrow><annotation encoding="application/x-tex">(b)\text{ is true} \implies (a)\text{ is true}</annotation></semantics></math></span> <a class="header-anchor" href="#b-text-is-true-implies-a-text-is-true">#</a></h4>
+<p>If <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(b)</annotation></semantics></math></span> is true, then the dual is feasible with an optimal value of the objective function equal to zero. Then for any <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>≤</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}\leq\mathbf{0}</annotation></semantics></math></span> satisfying <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{A}\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span> and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span>, we have <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">y</mi><mo>=</mo><mo>−</mo><mi mathvariant="bold">x</mi></mrow><annotation encoding="application/x-tex">\mathbf{y}=-\mathbf{x}</annotation></semantics></math></span> satisfying <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">y</mi><mo>≤</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{A}\mathbf{y}\leq\mathbf{0}</annotation></semantics></math></span> and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">y</mi><mo>≤</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{y}\leq\mathbf{0}</annotation></semantics></math></span> where <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mo>−</mo><msub><mi>y</mi><mn>1</mn></msub><mo>≤</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_1=-y_1\leq0</annotation></semantics></math></span> and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mn>1</mn></msub><mo>≤</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y_1\leq0</annotation></semantics></math></span> (by weak duality). Therefore, <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y_1=0</annotation></semantics></math></span> and thus <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_1=0</annotation></semantics></math></span>.</p>
+<h4 id="b-text-is-false-implies-a-text-is-false" tabindex="-1"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo><mtext> is false</mtext><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mtext> is false</mtext></mrow><annotation encoding="application/x-tex">(b)\text{ is false} \implies (a)\text{ is false}</annotation></semantics></math></span> <a class="header-anchor" href="#b-text-is-false-implies-a-text-is-false">#</a></h4>
+<p>If <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(b)</annotation></semantics></math></span> is false, then the dual is infeasible. This implies that the primal must either be infeasible or unbounded. Clearly, the primal is feasible with <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">y</mi><mo>=</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{y}=\mathbf{0}</annotation></semantics></math></span>, so the primal must be unbounded. Then for any <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>∈</mo><mi mathvariant="double-struck">R</mi></mrow><annotation encoding="application/x-tex">M\in\mathbb{R}</annotation></semantics></math></span>, there exists <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">y</mi></mrow><annotation encoding="application/x-tex">\mathbf{y}</annotation></semantics></math></span> such that <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">y</mi><mo>≤</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{A}\mathbf{y}\leq\mathbf{0}</annotation></semantics></math></span>, <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">y</mi><mo>≤</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{y}\leq\mathbf{0}</annotation></semantics></math></span>, and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><msub><mi>y</mi><mn>1</mn></msub><mo>&gt;</mo><mi>M</mi></mrow><annotation encoding="application/x-tex">-y_1&gt;M</annotation></semantics></math></span>. Choosing <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">M=0</annotation></semantics></math></span> and setting <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>=</mo><mo>−</mo><mi mathvariant="bold">y</mi></mrow><annotation encoding="application/x-tex">\mathbf{x}=-\mathbf{y}</annotation></semantics></math></span> yields <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{A}\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span>, <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span>, and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo mathvariant="normal">≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_1 \neq 0</annotation></semantics></math></span>, which shows <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a)</annotation></semantics></math></span> is false.</p>
+<h2 id="problem-4-28" tabindex="-1">Problem 4.28 <a class="header-anchor" href="#problem-4-28">#</a></h2>
+<p>Let <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">a</mi></mrow><annotation encoding="application/x-tex">\mathbf{a}</annotation></semantics></math></span> and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="bold">a</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi mathvariant="bold">a</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{a}_1,\dots,\mathbf{a}_m</annotation></semantics></math></span> be vectors in <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbb{R}^n</annotation></semantics></math></span>. Show the following are equivalent.
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>(a)</mtext></mrow><annotation encoding="application/x-tex">\text{(a)}</annotation></semantics></math></span> For all <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span>, we have <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold">a</mi><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="bold">x</mi><mo>≤</mo><msub><mrow><mi>max</mi><mo>⁡</mo></mrow><mi>i</mi></msub><msubsup><mi mathvariant="bold">a</mi><mi>i</mi><mi mathvariant="normal">⊤</mi></msubsup><mi mathvariant="bold">x</mi></mrow><annotation encoding="application/x-tex">\mathbf{a}^\top \mathbf{x}\leq \max_i \mathbf{a}^\top_i \mathbf{x}</annotation></semantics></math></span>.
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>(b)</mtext></mrow><annotation encoding="application/x-tex">\text{(b)}</annotation></semantics></math></span> There exist nonnegative coefficients <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\lambda_i</annotation></semantics></math></span> that sum to <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span> such that <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">a</mi><mo>≤</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></msubsup><msub><mi>λ</mi><mi>i</mi></msub><msub><mi mathvariant="bold">a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{a}\leq \sum^{m} _{i=1} \lambda_i \mathbf{a}_i</annotation></semantics></math></span>.</p>
+<h3 id="solution-1" tabindex="-1">Solution <a class="header-anchor" href="#solution-1">#</a></h3>
+<p>Consider the primal-dual pair:
+(Primal)
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>Maximize</mtext><mspace width="2em"/><mspace width="2em"/><msup><mi mathvariant="bold">a</mi><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="bold">x</mi><mo>+</mo><mi>y</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>subject to</mtext><mspace width="2em"/><mspace width="2em"/><msubsup><mi mathvariant="bold">a</mi><mi>i</mi><mi mathvariant="normal">⊤</mi></msubsup><mi mathvariant="bold">x</mi><mo>+</mo><mi>y</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≤</mo><mn>0</mn><mspace width="2em"/><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>m</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}\text{Maximize}\qquad\qquad\mathbf{a}^\top\mathbf{x} + y&amp; \newline \text{subject to}\qquad\qquad \mathbf{a}_i^\top \mathbf{x} + y &amp;\leq 0 \qquad i=1,\dots,m \newline \mathbf{x}\geq\mathbf{0}\end{align*}</annotation></semantics></math></span></p>
+<p>(Dual)
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>Minimize</mtext><mspace width="2em"/><mspace width="2em"/><mspace width="2em"/><mspace width="2em"/><msup><mn mathvariant="bold">0</mn><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="normal">Λ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>subject to</mtext><mspace width="2em"/><mrow><mo fence="true">(</mo><mtable rowspacing="0.16em" columnalign="center center center" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi mathvariant="bold">a</mi><mn>1</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mo lspace="0em" rspace="0em">…</mo></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi mathvariant="bold">a</mi><mi>m</mi></msub></mstyle></mtd></mtr></mtable><mo fence="true">)</mo></mrow><mi mathvariant="normal">Λ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≥</mo><mi mathvariant="bold">a</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><msup><mn mathvariant="bold">1</mn><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="normal">Λ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi mathvariant="normal">Λ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≥</mo><mn>0</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}\text{Minimize} \qquad\qquad\qquad\qquad \mathbf{0}^\top\Lambda&amp; \newline \text{subject to}\qquad \begin{pmatrix} \mathbf{a}_1 &amp; \dots &amp; \mathbf{a}_m \end{pmatrix} \Lambda &amp;\geq \mathbf{a} \newline \mathbf{1}^\top\Lambda &amp;= 1 \newline \Lambda &amp;\geq 0\end{align*}</annotation></semantics></math></span></p>
+<h4 id="b-text-is-true-implies-a-text-is-true-1" tabindex="-1"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo><mtext> is true</mtext><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mtext> is true</mtext></mrow><annotation encoding="application/x-tex">(b)\text{ is true} \implies (a)\text{ is true}</annotation></semantics></math></span> <a class="header-anchor" href="#b-text-is-true-implies-a-text-is-true-1">#</a></h4>
+<p>If <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(b)</annotation></semantics></math></span> is true, then the dual is feasible with optimal solution 0. Then the primal is feasible. Let <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span>. Then choose <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">y</mi><mo>=</mo><mo>−</mo><msub><mrow><mi>max</mi><mo>⁡</mo></mrow><mi>i</mi></msub><msubsup><mi mathvariant="bold">a</mi><mi>i</mi><mi mathvariant="normal">⊤</mi></msubsup><mi mathvariant="bold">x</mi></mrow><annotation encoding="application/x-tex">\mathbf{y} = -\max_i \mathbf{a}_i^\top \mathbf{x}</annotation></semantics></math></span>. We get <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold">a</mi><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="bold">x</mi><mo>−</mo><msub><mrow><mi>max</mi><mo>⁡</mo></mrow><mi>i</mi></msub><msubsup><mi mathvariant="bold">a</mi><mi>i</mi><mi mathvariant="normal">⊤</mi></msubsup><mi>x</mi><mo>≤</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{a}^\top \mathbf{x} - \max_i \mathbf{a}_i^\top x \leq \mathbf{0}</annotation></semantics></math></span>, so <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a)</annotation></semantics></math></span> is true.</p>
+<h4 id="b-text-is-false-implies-a-text-is-false-1" tabindex="-1"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo><mtext> is false</mtext><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mtext> is false</mtext></mrow><annotation encoding="application/x-tex">(b)\text{ is false} \implies (a)\text{ is false}</annotation></semantics></math></span> <a class="header-anchor" href="#b-text-is-false-implies-a-text-is-false-1">#</a></h4>
+<p>If <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(b)</annotation></semantics></math></span> is false, then the dual is infeasible, so primal is unbounded or infeasible.
+The primal is clearly feasible with <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>=</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}=\mathbf{0}</annotation></semantics></math></span> and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics></math></span>, so it must be unbounded. Then there exists <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>≥</mo><mn mathvariant="bold">0</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}\geq\mathbf{0}</annotation></semantics></math></span>, <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∈</mo><mi mathvariant="double-struck">R</mi></mrow><annotation encoding="application/x-tex">y\in\mathbb{R}</annotation></semantics></math></span>, such that <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="bold">a</mi><mi>i</mi><mi mathvariant="normal">⊤</mi></msubsup><mi mathvariant="bold">x</mi><mo>≤</mo><mo>−</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">\mathbf{a}_i^\top \mathbf{x} \leq -y</annotation></semantics></math></span> for all <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">i=1,\dots,m</annotation></semantics></math></span>, and <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold">a</mi><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="bold">x</mi><mo>+</mo><mi>y</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mathbf{a}^\top \mathbf{x}+y &gt; 0</annotation></semantics></math></span>.
+That is, <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold">a</mi><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="bold">x</mi><mo>&gt;</mo><mo>−</mo><mi>y</mi><mo>&gt;</mo><mo>=</mo><msubsup><mi>a</mi><mi>i</mi><mi>T</mi></msubsup><mi>x</mi></mrow><annotation encoding="application/x-tex">\mathbf{a}^\top \mathbf{x}&gt;-y&gt;=a_i^{T}x</annotation></semantics></math></span> for all <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">i=1,\dots,m</annotation></semantics></math></span>, so <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold">a</mi><mi mathvariant="normal">⊤</mi></msup><mi mathvariant="bold">x</mi><mo>&gt;</mo><msub><mrow><mi>max</mi><mo>⁡</mo></mrow><mi>i</mi></msub><msubsup><mi mathvariant="bold">a</mi><mi>i</mi><mi mathvariant="normal">⊤</mi></msubsup><mi mathvariant="bold">x</mi></mrow><annotation encoding="application/x-tex">\mathbf{a}^\top\mathbf{x} &gt; \max_i \mathbf{a}_i^\top \mathbf{x}</annotation></semantics></math></span>.</p>
+
+<ul class="links-nextprev"><li>Next: <a href="/blog/qp-weak-duality/">Weak Duality for QP</a></li>
+</ul>
+
+		</main>
+
+		<footer></footer>
+
+		<!-- Current page: /blog/lp-duality-practice/ -->
+	</body>
+</html>

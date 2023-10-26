@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="en">
+	<title>Joseph Li</title>
+	<subtitle>I am writing about my experiences as a naval navel-gazer.</subtitle>
+	<link href="https://example.com/feed/feed.xml" rel="self"/>
+	<link href="https://example.com/"/>
+	<updated>2022-02-03T00:00:00Z</updated>
+	<id>https://example.com/</id>
+	<author>
+		<name>Joseph Li</name>
+		<email>jli0108@umd.edu</email>
+	</author>
+	
+	<entry>
+		<title>Loop Subdivision</title>
+		<link href="https://example.com/blog/loop-subdivision/"/>
+		<updated>2022-02-03T00:00:00Z</updated>
+		<id>https://example.com/blog/loop-subdivision/</id>
+		<content type="html">&lt;p&gt;For the undergraduate computer graphics course (CMSC427) last semester, we were given an optional bonus assignment. We were required to implement some additional functionality in a 3D rendering engine, and I chose Loop subdivision.&lt;/p&gt;
+&lt;h3 id=&quot;subdivision-surfaces&quot; tabindex=&quot;-1&quot;&gt;Subdivision Surfaces &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/loop-subdivision/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Loop_subdivision_surface&quot;&gt;Loop subdivision&lt;/a&gt; (not to be confused with the Loop Subdivide tool in Blender) is a subdivision scheme for triangle meshes. Subdivision surface algorithms are used to take a coarse mesh and generate a much smoother one. This is extremely useful for 3D modeling and for creating a high poly mesh for sculpting. The disadvantage is that each level of subdivision increases the triangle count by some multiplicative factor (4, in the case of Loop subdivision). This typically makes subdivision unsuitable for animating models, since you usually want around 30k polygons or less (unless you apply &amp;quot;hacks&amp;quot; like shadow baking to make your model look good).&lt;/p&gt;
+&lt;p&gt;Note that in Blender, since 3D artists typically prefer quads over tris in manual modeling, the Catmull-Clark algorithm is used instead. Quad meshes are better because it allows you to do loop cuts cleanly.&lt;/p&gt;
+&lt;h3 id=&quot;winged-edge-data-structure&quot; tabindex=&quot;-1&quot;&gt;Winged Edge Data Structure &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/loop-subdivision/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Specialized data structures are needed for these subdivision surface algorithms, in this case the &lt;a href=&quot;https://en.wikipedia.org/wiki/Winged_edge&quot;&gt;winged edge data structure&lt;/a&gt;. This data structure stores a list of vertices, edges, and faces, but in some sense the edges are most important. Each edge stores a reference to its four incident vertices and two faces (in some specified order). Each vertex only needs to store one incident edge (along with its coordinate position, of course). Each face only needs to store one incident edge.&lt;/p&gt;
+&lt;p&gt;One way to create this winged edge data structure is to loop through all the faces, but then looping through all edges is required to make sure edges are not duplicated. It might be possible to avoid this by first adding all vertices and edges, making sure not to duplicate edges by using a hashmap. Then, you can fill out the incident faces and edges for each edge. However, as a disclaimer, I did not thoroughly test this alternate implementation.&lt;/p&gt;
+&lt;h3 id=&quot;loop-subdivision&quot; tabindex=&quot;-1&quot;&gt;Loop Subdivision &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/loop-subdivision/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The Loop subdivision surface &lt;a href=&quot;https://graphics.stanford.edu/%7Emdfisher/subdivision.html&quot;&gt;scheme&lt;/a&gt; basically takes each vertex in the original mesh and replaces it with a new vertex that is some convex combination of adjacent vertices. If $n$ is the degree of the vertex to be replaced, the weight $&#92;beta$ for each of the adjacent vertices is $$&#92;beta=&#92;begin{cases} &#92;frac{3}{8n}, &#92;qquad n&amp;gt;3, &#92;newline &#92;frac{3}{16}, &#92;qquad n=3. &#92;end{cases}$$&lt;/p&gt;
+&lt;p&gt;An additional vertex is also added for each edge in the original mesh. If the edge has two incident faces, the new vertex is a convex combination of the four vertices comprising those two faces. The weights for the two &amp;quot;close&amp;quot; vertices on the edge are each $3/8$, while the weights for the two &amp;quot;far&amp;quot; vertices are each $1/8$.&lt;/p&gt;
+&lt;p&gt;If the edge only has a single incident face, then the new vertex is simply placed at the midpoint of the vertices making up that edge.&lt;/p&gt;
+&lt;p&gt;Finally, the only thing left to do is to fill in the faces.&lt;/p&gt;
+&lt;p&gt;This algorithm is actually quite simple and the more challenging part, surprisingly, is implementing the winged edge data structure.&lt;/p&gt;
+&lt;p&gt;Below are 5 levels of Loop subdivision applied onto a tetrahedron and an icosahedron.
+&lt;img src=&quot;https://example.com/img/tetrahedron.png&quot; width=&quot;600&quot; alt=&quot;tetrahedron&quot;&gt;
+&lt;img src=&quot;https://example.com/img/icosahedron.png&quot; width=&quot;600&quot; alt=&quot;icosahedron&quot;&gt;&lt;/p&gt;
+&lt;!-- ![Tetrahedron](/img/tetrahedron.png){width=500} --&gt;
+&lt;!-- ![Icosahedron](/img/icosahedron.png) --&gt;</content>
+	</entry>
+	
+	<entry>
+		<title>Weak Duality for QP</title>
+		<link href="https://example.com/blog/qp-weak-duality/"/>
+		<updated>2022-02-01T00:00:00Z</updated>
+		<id>https://example.com/blog/qp-weak-duality/</id>
+		<content type="html">&lt;p&gt;Here is a quick proof of weak duality for the following general primal-dual pair of (linear equality constrained) QP problems:&lt;/p&gt;
+&lt;p&gt;Consider the following primal-dual QP pair:
+(Primal)
+$$&#92;begin{align*} &#92;text{Minimize}&#92;qquad &amp;amp; &#92;mathbf{c}^&#92;top &#92;mathbf{x} + &#92;frac{1}{2} &#92;mathbf{x}^&#92;top &#92;mathbf{Q} &#92;mathbf{x} &#92;newline &#92;text{subject to}&#92;qquad &amp;amp; &#92;mathbf{A}&#92;mathbf{x} = &#92;mathbf{b} &#92;newline &amp;amp; &#92;mathbf{x} &#92;succcurlyeq &#92;mathbf{0}&#92;end{align*}$$
+(Dual)
+$$&#92;begin{align*} &#92;text{Maximize}&#92;qquad &amp;amp; &#92;mathbf{b}^&#92;top &#92;mathbf{y} - &#92;frac{1}{2} &#92;mathbf{x}^&#92;top &#92;mathbf{Q} &#92;mathbf{x} &#92;newline &#92;text{subject to}&#92;qquad &amp;amp; &#92;mathbf{A}^&#92;top &#92;mathbf{y} - &#92;mathbf{Q}&#92;mathbf{x} &#92;preccurlyeq &#92;mathbf{c}&#92;end{align*}$$&lt;/p&gt;
+&lt;h3 id=&quot;solution&quot; tabindex=&quot;-1&quot;&gt;Solution &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/qp-weak-duality/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;To show any solution of the primal (minimization) is no less than any solution of the dual (maximization), we show that $&#92;mathbf{b}^&#92;top &#92;mathbf{y} &#92;leq &#92;mathbf{c}^&#92;top &#92;mathbf{x} + &#92;mathbf{x}^&#92;top &#92;mathbf{Q} &#92;mathbf{x}$.&lt;/p&gt;
+&lt;p&gt;Using the constraint in the primal, we have $&#92;mathbf{y}^&#92;top &#92;mathbf{A} &#92;mathbf{x} = &#92;mathbf{b}^&#92;top &#92;mathbf{y}$. From the constraint in the dual, we have $&#92;mathbf{y}^&#92;top&#92;mathbf{A}&#92;mathbf{x}-&#92;mathbf{x}^&#92;top &#92;mathbf{Q}&#92;mathbf{x} &#92;leq &#92;mathbf{c}^&#92;top &#92;mathbf{x}$, since $&#92;mathbf{x}&#92;succcurlyeq &#92;mathbf{0}$.
+Therefore, $&#92;mathbf{b}^&#92;top &#92;mathbf{y} = &#92;mathbf{y}^&#92;top &#92;mathbf{A} &#92;mathbf{x} &#92;leq &#92;mathbf{c}^&#92;top &#92;mathbf{x} + &#92;mathbf{x}^&#92;top &#92;mathbf{Q} &#92;mathbf{x}$.&lt;/p&gt;
+&lt;p&gt;We do not need to assume anything about $&#92;mathbf{Q}$. When $&#92;mathbf{Q}$ is the matrix of all zeros, the pair of QPs becomes the standard primal-dual pair for LPs.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>LP Duality Practice</title>
+		<link href="https://example.com/blog/lp-duality-practice/"/>
+		<updated>2021-11-24T00:00:00Z</updated>
+		<id>https://example.com/blog/lp-duality-practice/</id>
+		<content type="html">&lt;p&gt;To prepare for my linear programming midterm, I looked at these problems from Bertsismas and Tsitsiklas&#39; &lt;em&gt;Introduction to Linear Optimization&lt;/em&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;problem-4-27&quot; tabindex=&quot;-1&quot;&gt;Problem 4.27 &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/lp-duality-practice/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;For a given matrix $&#92;mathbf{A}$, show that the following are equivalent:
+$&#92;text{(a)}$ Every vector $&#92;mathbf{x}$ such that $&#92;mathbf{A}&#92;mathbf{x}&#92;geq&#92;mathbf{0}$ and $&#92;mathbf{x}&#92;geq&#92;mathbf{0}$ must satisfy $x_1=0$.
+$&#92;text{(b)}$ There exists some $&#92;mathbf{p}$ such that $&#92;mathbf{A}^&#92;top &#92;mathbf{p} &#92;leq &#92;mathbf{0}$, $&#92;mathbf{p}&#92;geq&#92;mathbf{0}$, and $&#92;mathbf{A}_1^&#92;top&#92;mathbf{p}&amp;lt;0$ where $&#92;mathbf{A}_1$ is the first column of $&#92;mathbf{A}$.&lt;/p&gt;
+&lt;h3 id=&quot;solution&quot; tabindex=&quot;-1&quot;&gt;Solution &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/lp-duality-practice/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Consider the following primal-dual LP pair:
+(Dual)
+$$&#92;begin{align*} &#92;text{Minimize}&#92;qquad&#92;qquad &amp;amp;&#92;mathbf{0}^&#92;top &#92;mathbf{p} &#92;newline &#92;text{subject to}&#92;qquad &#92;mathbf{A}_1^&#92;top &#92;mathbf{p} &amp;amp;&#92;leq -1 &amp;lt; 0 &#92;newline &#92;mathbf{A}_i^&#92;top &#92;mathbf{p} &amp;amp;&#92;leq &#92;mathbf{0}&#92;qquad &#92;forall i &#92;neq 1 &#92;newline &#92;mathbf{p} &amp;amp;&#92;geq 0&#92;end{align*}$$
+(Primal)
+$$&#92;begin{align*} &#92;text{Maximize}&#92;qquad&#92;qquad &amp;amp;-y_1 &#92;newline &#92;text{subject to}&#92;qquad &#92;mathbf{A}&#92;mathbf{y} &amp;amp;&#92;leq &#92;mathbf{0} &#92;newline &#92;mathbf{y} &amp;amp;&#92;leq &#92;mathbf{0}&#92;end{align*}$$&lt;/p&gt;
+&lt;h4 id=&quot;b-text-is-true-implies-a-text-is-true&quot; tabindex=&quot;-1&quot;&gt;$(b)&#92;text{ is true} &#92;implies (a)&#92;text{ is true}$ &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/lp-duality-practice/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;If $(b)$ is true, then the dual is feasible with an optimal value of the objective function equal to zero. Then for any $&#92;mathbf{x}&#92;leq&#92;mathbf{0}$ satisfying $&#92;mathbf{A}&#92;mathbf{x}&#92;geq&#92;mathbf{0}$ and $&#92;mathbf{x}&#92;geq&#92;mathbf{0}$, we have $&#92;mathbf{y}=-&#92;mathbf{x}$ satisfying $&#92;mathbf{A}&#92;mathbf{y}&#92;leq&#92;mathbf{0}$ and $&#92;mathbf{y}&#92;leq&#92;mathbf{0}$ where $x_1=-y_1&#92;leq0$ and $y_1&#92;leq0$ (by weak duality). Therefore, $y_1=0$ and thus $x_1=0$.&lt;/p&gt;
+&lt;h4 id=&quot;b-text-is-false-implies-a-text-is-false&quot; tabindex=&quot;-1&quot;&gt;$(b)&#92;text{ is false} &#92;implies (a)&#92;text{ is false}$ &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/lp-duality-practice/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;If $(b)$ is false, then the dual is infeasible. This implies that the primal must either be infeasible or unbounded. Clearly, the primal is feasible with $&#92;mathbf{y}=&#92;mathbf{0}$, so the primal must be unbounded. Then for any $M&#92;in&#92;mathbb{R}$, there exists $&#92;mathbf{y}$ such that $&#92;mathbf{A}&#92;mathbf{y}&#92;leq&#92;mathbf{0}$, $&#92;mathbf{y}&#92;leq&#92;mathbf{0}$, and $-y_1&amp;gt;M$. Choosing $M=0$ and setting $&#92;mathbf{x}=-&#92;mathbf{y}$ yields $&#92;mathbf{A}&#92;mathbf{x}&#92;geq&#92;mathbf{0}$, $&#92;mathbf{x}&#92;geq&#92;mathbf{0}$, and $x_1 &#92;neq 0$, which shows $(a)$ is false.&lt;/p&gt;
+&lt;h2 id=&quot;problem-4-28&quot; tabindex=&quot;-1&quot;&gt;Problem 4.28 &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/lp-duality-practice/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Let $&#92;mathbf{a}$ and $&#92;mathbf{a}_1,&#92;dots,&#92;mathbf{a}_m$ be vectors in $&#92;mathbb{R}^n$. Show the following are equivalent.
+$&#92;text{(a)}$ For all $&#92;mathbf{x}&#92;geq&#92;mathbf{0}$, we have $&#92;mathbf{a}^&#92;top &#92;mathbf{x}&#92;leq &#92;max_i &#92;mathbf{a}^&#92;top_i &#92;mathbf{x}$.
+$&#92;text{(b)}$ There exist nonnegative coefficients $&#92;lambda_i$ that sum to $1$ such that $&#92;mathbf{a}&#92;leq &#92;sum^{m} _{i=1} &#92;lambda_i &#92;mathbf{a}_i$.&lt;/p&gt;
+&lt;h3 id=&quot;solution-1&quot; tabindex=&quot;-1&quot;&gt;Solution &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/lp-duality-practice/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Consider the primal-dual pair:
+(Primal)
+$$&#92;begin{align*}&#92;text{Maximize}&#92;qquad&#92;qquad&#92;mathbf{a}^&#92;top&#92;mathbf{x} + y&amp;amp; &#92;newline &#92;text{subject to}&#92;qquad&#92;qquad &#92;mathbf{a}_i^&#92;top &#92;mathbf{x} + y &amp;amp;&#92;leq 0 &#92;qquad i=1,&#92;dots,m &#92;newline &#92;mathbf{x}&#92;geq&#92;mathbf{0}&#92;end{align*}$$&lt;/p&gt;
+&lt;p&gt;(Dual)
+$$&#92;begin{align*}&#92;text{Minimize} &#92;qquad&#92;qquad&#92;qquad&#92;qquad &#92;mathbf{0}^&#92;top&#92;Lambda&amp;amp; &#92;newline &#92;text{subject to}&#92;qquad &#92;begin{pmatrix} &#92;mathbf{a}_1 &amp;amp; &#92;dots &amp;amp; &#92;mathbf{a}_m &#92;end{pmatrix} &#92;Lambda &amp;amp;&#92;geq &#92;mathbf{a} &#92;newline &#92;mathbf{1}^&#92;top&#92;Lambda &amp;amp;= 1 &#92;newline &#92;Lambda &amp;amp;&#92;geq 0&#92;end{align*}$$&lt;/p&gt;
+&lt;h4 id=&quot;b-text-is-true-implies-a-text-is-true-1&quot; tabindex=&quot;-1&quot;&gt;$(b)&#92;text{ is true} &#92;implies (a)&#92;text{ is true}$ &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/lp-duality-practice/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;If $(b)$ is true, then the dual is feasible with optimal solution 0. Then the primal is feasible. Let $&#92;mathbf{x}&#92;geq&#92;mathbf{0}$. Then choose $&#92;mathbf{y} = -&#92;max_i &#92;mathbf{a}_i^&#92;top &#92;mathbf{x}$. We get $&#92;mathbf{a}^&#92;top &#92;mathbf{x} - &#92;max_i &#92;mathbf{a}_i^&#92;top x &#92;leq &#92;mathbf{0}$, so $(a)$ is true.&lt;/p&gt;
+&lt;h4 id=&quot;b-text-is-false-implies-a-text-is-false-1&quot; tabindex=&quot;-1&quot;&gt;$(b)&#92;text{ is false} &#92;implies (a)&#92;text{ is false}$ &lt;a class=&quot;header-anchor&quot; href=&quot;https://example.com/blog/lp-duality-practice/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;If $(b)$ is false, then the dual is infeasible, so primal is unbounded or infeasible.
+The primal is clearly feasible with $&#92;mathbf{x}=&#92;mathbf{0}$ and $y=0$, so it must be unbounded. Then there exists $&#92;mathbf{x}&#92;geq&#92;mathbf{0}$, $y&#92;in&#92;mathbb{R}$, such that $&#92;mathbf{a}_i^&#92;top &#92;mathbf{x} &#92;leq -y$ for all $i=1,&#92;dots,m$, and $&#92;mathbf{a}^&#92;top &#92;mathbf{x}+y &amp;gt; 0$.
+That is, $&#92;mathbf{a}^&#92;top &#92;mathbf{x}&amp;gt;-y&amp;gt;=a_i^{T}x$ for all $i=1,&#92;dots,m$, so $&#92;mathbf{a}^&#92;top&#92;mathbf{x} &amp;gt; &#92;max_i &#92;mathbf{a}_i^&#92;top &#92;mathbf{x}$.&lt;/p&gt;
+</content>
+	</entry>
+</feed>

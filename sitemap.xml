@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+	
+	<url>
+		<loc>https://example.com/blog/lp-duality-practice/</loc>
+		<lastmod>2021-11-24</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/blog/qp-weak-duality/</loc>
+		<lastmod>2022-02-01</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/blog/loop-subdivision/</loc>
+		<lastmod>2022-02-03</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/about/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/blog/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/corona/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/AMSC466/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/BMGT830/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/CMSC330/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/CMSC416/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/CMSC420/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/CMSC422/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/CMSC427/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/CMSC451/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/COMM107/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/EALL300/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/HONR298J/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/MATH416/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/MATH475/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/PHYS270/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/PHYS457/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/course-reviews/PHYS467/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/diffusion/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/gacha/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/particle-simulation/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/pazudora-simulation/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/pazudora-simulation/three-match-skyfalls/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/pazudora-simulation/two-match-skyfalls/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/pazudora-simulation/two-match/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/restaurant-picker/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/sticky-collisions/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/thermodynamics/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/old-site/visualizing-random-walk/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/resume/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/tags/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/tags/computer-graphics/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/tags/linear-programming/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/tags/quadratic-programming/</loc>
+		<lastmod>2023-10-26</lastmod>
+	</url>
+</urlset>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gacha</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Computer Modern/Serif/cmun-serif.css">
+  </head>
+  <body>
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark" >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Joseph Li</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href=".">Home</a>
+            <a class="nav-link" href="resume.pdf">Resume</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <br><br>
+    <div>
+      <button onclick="roll();">Click here to roll</button>
+      <p id="output">Let's see what you got!</p>
+      <p id="count">Number of rolls: 0</p>
+      <p><b>Your rolls:</b></p>
+      <ul id="rolls" style="text-align:left;display:inline-block;"></ul>
+    </div>
+    <script>
+      class Card {
+        constructor(name, chance) {
+          this.name = name;
+          this.chance = chance;
+        }
+      }
+
+      var count = 0;
+      var cards = [
+        new Card("McDonalds", 0.10),
+        new Card("Potbelly", 0.10),
+        new Card("Chick-fil-A", 0.15),
+        new Card("Chipotle", 0.10),
+        new Card("Panda Express", 0.10),
+        new Card("Quickway", 0.05),
+        new Card("Subway", 0.05),
+        new Card("Papa John's", 0.05),
+        new Card("Panera Bread", 0.05),
+        new Card("the refrigerator", 0.10),
+        new Card("Five Guys", 0.04),
+        new Card("Popeye's", 0.02),
+        new Card("Jumbo Jumbo", 0.05),
+        new Card("Pho and Grill", 0.04)
+      ];
+
+      var rolls = [];
+
+      function roll() {
+        count++;
+        var rng = Math.random();
+        var rollValue;
+        var i = 0;
+        while (rng >= cdf(i)) {
+          i++;
+        }
+        rollValue = cards[i].name;
+        rolls.push(cards[i]);
+        document.getElementById("output").innerHTML = "Go to " + rollValue + "!";
+        updateRolls(cards[i]);
+        document.getElementById("count").innerHTML = "Number of rolls: " + count;
+      }
+
+      function cdf(x) {
+        /* returns probability of getting any of the first (x+1) cards */
+        var sum = 0;
+        for (var i = 0; i <= x; i++) {
+          sum += cards[i].chance;
+        }
+        return sum;
+      }
+
+      function updateRolls(card) {
+        var ul = document.getElementById("rolls");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(card.name));
+        ul.appendChild(li);
+      }
+    </script>
+  </body>
+</html>
