@@ -58,7 +58,7 @@ function draw() {
     states[m].active = true;
 
     drawStates();
-    image.src = ("assets/dollar bills " + m + ".png");
+    image.src = ("../../dollar bills " + m + ".png");
 
     if (m > 0 && m < n - 1) {
         states[m].active = false;
