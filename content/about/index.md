@@ -19,7 +19,7 @@ As of Fall 2023, I am in ATL 3105.
 <br>
 Joint Center for Quantum Information and Computer Science (QuICS)
 <br>
-3100 Atlantic Builiding
+3100 Atlantic Building
 <br>
 University of Maryland
 <br>
