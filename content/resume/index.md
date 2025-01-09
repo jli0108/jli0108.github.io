@@ -1,5 +1,5 @@
 ---
-layout: layouts/post.njk
+layout: layouts/post_no_date.njk
 title: Resume
 date: Last Modified
 templateClass: tmpl-post
