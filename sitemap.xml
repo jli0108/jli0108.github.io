@@ -2,207 +2,202 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
-		<loc>https://example.com/blog/lp-duality-practice/</loc>
+		<loc>https://jli0108.com/blog/lp-duality-practice/</loc>
 		<lastmod>2021-11-24</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/blog/qp-weak-duality/</loc>
+		<loc>https://jli0108.com/blog/qp-weak-duality/</loc>
 		<lastmod>2022-02-01</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/blog/loop-subdivision/</loc>
+		<loc>https://jli0108.com/blog/loop-subdivision/</loc>
 		<lastmod>2022-02-03</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/about/</loc>
+		<loc>https://jli0108.com/blog/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/blog/</loc>
+		<loc>https://jli0108.com/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/</loc>
+		<loc>https://jli0108.com/old-site/corona/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/corona/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/AMSC466/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/AMSC466/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/BMGT830/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/BMGT830/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/CMSC330/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/CMSC330/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/CMSC416/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/CMSC416/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/CMSC420/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/CMSC420/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/CMSC422/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/CMSC422/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/CMSC427/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/CMSC427/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/CMSC451/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/CMSC451/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/COMM107/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/COMM107/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/EALL300/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/EALL300/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/HONR298J/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/HONR298J/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/MATH416/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/MATH416/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/MATH475/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/MATH475/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/PHYS270/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/PHYS270/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/PHYS457/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/PHYS457/</loc>
+		<loc>https://jli0108.com/old-site/course-reviews/PHYS467/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/course-reviews/PHYS467/</loc>
+		<loc>https://jli0108.com/old-site/diffusion/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/diffusion/</loc>
+		<loc>https://jli0108.com/old-site/gacha/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/gacha/</loc>
+		<loc>https://jli0108.com/old-site/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/</loc>
+		<loc>https://jli0108.com/old-site/pad_simulation/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/pad_simulation/</loc>
+		<loc>https://jli0108.com/old-site/pad_simulation/three-match-skyfalls/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/pad_simulation/three-match-skyfalls/</loc>
+		<loc>https://jli0108.com/old-site/pad_simulation/two-match-skyfalls/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/pad_simulation/two-match-skyfalls/</loc>
+		<loc>https://jli0108.com/old-site/pad_simulation/two-match/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/pad_simulation/two-match/</loc>
+		<loc>https://jli0108.com/old-site/particle-simulation/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/particle-simulation/</loc>
+		<loc>https://jli0108.com/old-site/restaurant-picker/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/restaurant-picker/</loc>
+		<loc>https://jli0108.com/old-site/sticky-collisions/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/sticky-collisions/</loc>
+		<loc>https://jli0108.com/old-site/thermodynamics/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/thermodynamics/</loc>
+		<loc>https://jli0108.com/old-site/visualizing-random-walk/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/old-site/visualizing-random-walk/</loc>
+		<loc>https://jli0108.com/research/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/research/</loc>
+		<loc>https://jli0108.com/resume/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/resume/</loc>
+		<loc>https://jli0108.com/tags/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/tags/</loc>
+		<loc>https://jli0108.com/tags/computer-graphics/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/tags/computer-graphics/</loc>
+		<loc>https://jli0108.com/tags/linear-programming/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/tags/linear-programming/</loc>
-		<lastmod>2025-01-09</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://example.com/tags/quadratic-programming/</loc>
+		<loc>https://jli0108.com/tags/quadratic-programming/</loc>
 		<lastmod>2025-01-09</lastmod>
 	</url>
 </urlset>
