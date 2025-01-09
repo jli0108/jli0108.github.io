@@ -7,9 +7,9 @@ eleventyNavigation:
   key: Resume
   order: 4
 ---
-
+Below is my resume. Alternatively, [open in browser](/resume.pdf).
 <div>
   <br>
-  <iframe src="/resume.pdf" width="80%" height="1000px">
+  <iframe src="/resume.pdf#pagemode=none" width="80%" height="1000px">
 </div>
 
