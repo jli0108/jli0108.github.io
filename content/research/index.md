@@ -1,12 +1,19 @@
 ---
-layout: layouts/post.njk
+layout: layouts/post_no_date.njk
 title: Research
 date: Last Modified
 templateClass: tmpl-post
 eleventyNavigation:
   key: Research
-  order: 3
+  order: 2
 ---
+
+Broadly speaking, I am interested in the following topics (non-exhaustive):
+- Hamiltonian simulation
+- Simulating differential equations
+- Numerical optimization
+- Machine learning for quantum computing
+- Circuit compilation and optimization
 
 Here is a list of research projects I have worked on.
 

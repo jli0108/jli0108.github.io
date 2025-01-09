@@ -5,7 +5,7 @@ date: Last Modified
 templateClass: tmpl-post
 eleventyNavigation:
   key: Resume
-  order: 4
+  order: 3
 ---
 Below is my resume. Alternatively, [open in browser](/resume.pdf).
 <div>

@@ -1,11 +1,8 @@
 ---
-layout: layouts/post_no_date.njk
-title: About Me
+layout: layouts/post.njk
+title: About me
 date: Last Modified
 templateClass: tmpl-post
-eleventyNavigation:
-  key: About Me
-  order: 5
 ---
 
 For my undergraduate education, I studied math and computer science at UMD from 2018 to 2021.
@@ -24,5 +21,3 @@ Joint Center for Quantum Information and Computer Science (QuICS)
 University of Maryland
 <br>
 College Park, MD 20742-2420
-
-My <a href="{{ '/old-site/' | url }}">old website</a> (some parts may be broken).
