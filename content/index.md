@@ -5,6 +5,8 @@ date: Last Modified
 templateClass: tmpl-post
 ---
 
+<br>
+<img style="float:right; margin:5px 0px 0px 10px;" src="/img/photo.png" width="135" alt="photo">
 For my undergraduate education, I studied math and computer science at UMD from 2018 to 2021.
 Since 2022, I have been a graduate student in the Department of Computer Science.
 My main research interest is in quantum algorithms for scientific computation (differential equations, optimization, etc.).
