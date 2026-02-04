@@ -17,9 +17,11 @@ Broadly speaking, I am interested in the following topics (non-exhaustive):
 
 Here is a list of research projects I have worked on.
 
-- Quantum Hamiltonian Descent. Jiaqi Leng, Ethan Hickman, Joseph Li, and Xiaodi Wu. Manuscript, 2023. ([Website](https://jiaqileng.github.io/quantum-hamiltonian-descent/), [arXiv](https://arxiv.org/abs/2303.01471))
-- Expanding hardware-efficiently manipulable Hilbert space by Hamiltonian embedding. Jiaqi Leng*, Joseph Li*, Yuxiang Peng, and Xiaodi Wu. [*Quantum* 9, 1857](  https://doi.org/10.22331/q-2025-09-11-1857) (2025). 
+- Quantum Hamiltonian Descent. Jiaqi Leng, Ethan Hickman, **Joseph Li**, and Xiaodi Wu. Manuscript, 2023. ([Website](https://jiaqileng.github.io/quantum-hamiltonian-descent/), [arXiv](https://arxiv.org/abs/2303.01471))
+- Expanding hardware-efficiently manipulable Hilbert space by Hamiltonian embedding. Jiaqi Leng*, **Joseph Li***, Yuxiang Peng, and Xiaodi Wu. [*Quantum* 9, 1857](  https://doi.org/10.22331/q-2025-09-11-1857) (2025). 
   - [AWS Quantum Blog Post: Leveraging near-term quantum hardware for simulating high-dimensional dynamics](https://aws.amazon.com/blogs/quantum-computing/leveraging-near-term-quantum-hardware-for-simulating-high-dimensional-dynamics/)
-<!-- ([arXiv](https://arxiv.org/abs/2401.08550), [poster](./HamEmbedding_poster.pdf), [APS March Meeting 2024 slides](./ham_ebd_march_meeting_slides.pdf)) -->
-</br>
-<img src="/img/ham_ebd.png" width="600" alt="hamiltonian embedding">
+  <!-- ([arXiv](https://arxiv.org/abs/2401.08550), [poster](./HamEmbedding_poster.pdf), [APS March Meeting 2024 slides](./ham_ebd_march_meeting_slides.pdf)) -->
+  <!-- </br> -->
+  <img src="/img/ham_ebd.png" width="600" alt="hamiltonian embedding">
+- Resource-efficient quantum simulation of transport phenomena via Hamiltonian embedding. **Joseph Li**, Gengzhi Yang, Jiaqi Leng, and Xiaodi Wu. Manuscript, 2026. ([arXiv](https://arxiv.org/abs/2602.03099))
+- Efficient Quantum Circuits for the Hilbert Transform. Henry Zhang and **Joseph Li**. *IEEE Signal Processing Letters* (2026). 
